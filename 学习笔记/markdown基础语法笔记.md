@@ -20,10 +20,11 @@
 最前面有**感叹号**的是图片
 * **格式**：
 	* **超链接**：[链接的说明文字(点击之后跳转到本仓库首页哦)](https://github.com/YCDR-810518/LearningNoteBookInWinter)
-	* **图片**：<img src="C:\Users\Administrator\Desktop\yc\Gawr-Gura-PNG-Isolated-Photo.png" alt="图片说明文字" style="zoom:21%;" />
+	* **图片**：<img src="https://cdn.jsdelivr.net/gh/YCDR-810518/imageBed/main/2026/02/upgit_20260202_1770016984.png" alt="图片说明文字" style="zoom:21%;" />
 	* gura哭哭ヾ(≧▽≦*)o
 
 ## 5. 代码段&代码块
+
 * **行内的代码**：`print('hello python!')`用两个反引号包裹住
 * **代码块**：三个反引号包裹，并在开头的三个反引号后写明代码块的语言
 	**C语言的代码块**
