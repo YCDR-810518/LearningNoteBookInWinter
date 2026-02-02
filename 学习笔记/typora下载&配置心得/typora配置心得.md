@@ -7,7 +7,8 @@
 这是我找到一个比较好的[**Typora下载&安装激活教程**](https://zhuanlan.zhihu.com/p/1971144711982026882)
 
 ### 关于激活和安装
-我尝试了最新版，高功能版本和老版本，其中最新版的激活过于复杂，且功能与高功能版本的相差不大，建议直接用高功能版本
+
+我尝试了**最新版**，**高功能版本和老版本**，其中最新版的激活过于复杂，且功能与高功能版本的相差不大，建议直接用**高功能版本**
 **老版本**没有图床的功能！
 
 ## 图床的设置
@@ -21,10 +22,21 @@
 	[Release v0.2.25](https://github.com/pluveto/upgit/releases/tag/v0.2.25)
 
 ### GitHub图床设置流程
-1. 要先在Github创建一个库作为上传的图床（**一定要设置为public否则会404**）
-2. 点击settings
-![6b78cf53-e3a5-4d10-833d-461d4daf2a59](https://cdn.jsdelivr.net/gh/YCDR-810518/imageBed/main/2026/02/upgit_20260202_1770019216.png)
-3. 点击Developer settings
-![3dc54118-d8bc-4a8a-a54c-f5607baf12a1](https://cdn.jsdelivr.net/gh/YCDR-810518/imageBed/main/2026/02/upgit_20260202_1770019462.png)
-4. 再点这个传统token生成
-![0f598904-4dc1-4bd2-a84b-0573fafb2ff9](https://cdn.jsdelivr.net/gh/YCDR-810518/imageBed/main/2026/02/upgit_20260202_1770019727.png)
+
+<img src="C:\Users\Administrator\Desktop\yc\Gawr-Gura-PNG-Isolated-Photo.png" alt="Gawr-Gura-PNG-Isolated-Photo" style="zoom:25%;" />
+
+这部分直接问AI即可
+
+### 注意，我在挂了梯子（全局代理）的情况下使用CDN加速会出现问题，如果你也是这样，请记得把Upgit配置文件中的这几行注释掉
+
+配置文件（要记得根据REAME把文件名改成下面这样！）
+
+![image-20260202162829897](https://raw.githubusercontent.com/YCDR-810518/imageBed/main/2026/02/upgit_20260202_1770020909.png)
+
+CDN加速的相关配置
+
+![image-20260202162947922](https://raw.githubusercontent.com/YCDR-810518/imageBed/main/2026/02/upgit_20260202_1770020988.png)
+
+在偏好设置中设置好，最后在这里测试上传一下即可
+
+![image-20260202163143218](https://raw.githubusercontent.com/YCDR-810518/imageBed/main/2026/02/upgit_20260202_1770021103.png)
