@@ -1,0 +1,16 @@
+{
+    "Agent": [
+        "007_Bond"
+    ],
+    "Coords": [
+        "40",
+        "74"
+    ],
+    "Items": [
+        "money",
+        "gun"
+    ],
+    "Mission": [
+        "2025-RESCUE-X"
+    ]
+}
