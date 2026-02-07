@@ -28,4 +28,5 @@ for x in ultimate_data:
     else:
         ultimate_data_Dict['运转正常'].append(float(x))
 
+
 print(ultimate_data_Dict)
