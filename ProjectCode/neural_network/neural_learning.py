@@ -1,4 +1,6 @@
 import numpy as np
+import json
+
 
 # 输入的矩阵X形式（样本数，特征数）
 # 输入的权重weights形式（特征数，1）
@@ -30,16 +32,41 @@ class Neuron:
         # 3. np.mean 会自动对矩阵求和并除以元素个数
         return np.mean((y_true - y_pred) ** 2)
 
+    # 保存模型为.json格式
+    def savemodel(self, filename):
+        data = {
+            'weights': self.weights.tolist(),
+            'bias': self.bias.tolist(),
+            'learning_rate': self.learning_rate
+        }
+        with open(filename, 'w') as f:
+            json.dump(data, f)
+        print(f'模型已成功保存至{filename}')
+    #从同一目录下读取模型文件
+    def loadmodel(self, filename):
+        with open(filename, 'r') as f:
+            data = json.load(f)
+            self.weights = np.array(data['weights'])
+            self.bias = np.array(data['bias'])
+            self.learning_rate = float(data['learning_rate'])
+        print(f'模型{filename}已经成功加载！')
+
     # 梯度下降算法,为权重找到最佳值
     # 这里的学习率由用户确定
     # X是特征向量，y为真实的数据集
-    def gradient(self, X, y_true, learning_round):
-        # 当斜率不为零时
+    def gradient(self, X, y_true, learning_round,*,load = False):
+        # 选择是否加载模型
+        if load==True:
+            print('请输入要加载的模型名字，要带后缀哦！')
+            filename = input()
+            self.loadmodel(filename)
+        else:
+            pass
         # 指定学习轮数
         for i in range(learning_round):
-
             # 取得当前权重下的预测值
             y_pred = self.feedforward(X)
+
 
             # 计算误差项（这里取绝对值会丢失方向）
             error = y_true - y_pred
@@ -56,7 +83,24 @@ class Neuron:
             if i % 100 ==0 :
                 current_loss = self.loss(y_true, y_pred)
                 print(f'\n第{i}轮：\nLoss:{current_loss:.4f},weights:{self.weights[0][0]:.4f},bias:{self.bias[0]:.4f}')
+        print('是否保存模型？若是请以.json后缀保存哦！(y/n)')
+        choice = input()
+        if choice == 'y':
+            print('请输入文件名')
+            filename = input()
+            self.savemodel(filename)
+        if choice == 'n':
+            pass
 
+    def save_model(self, filename):
+        data = {
+            'weights': self.weights.tolist(),
+            'bias': self.bias.tolist(),
+            'learning_rate': self.learning_rate
+        }
+        with open(filename, 'w') as f:
+            json.dump(data, f)
+        print(f"模型已成功保存至 {filename} ✨")
 
 # 准备数据
 np.random.seed(42) # 固定随机种子，方便复现结果
@@ -72,8 +116,8 @@ bias = np.array([0.0])
 neuron = Neuron(weights, bias, learning_rate=0.1)
 
 # 开始训练
-rounds = 1000000
-neuron.gradient(X, y, rounds)
+rounds = 10000
+neuron.gradient(X, y, rounds, load=True)
 
 # 1. 生成测试数据：5个随机的湿度值
 X_test = np.array([[0.2], [0.4], [0.6], [0.8], [0.1]])
