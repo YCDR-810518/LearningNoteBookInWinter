@@ -64,7 +64,7 @@ class Kmeans:
 
 
 # 准备数据
-X = np.array([[2,3], [5,8], [1,7], [8,2], [9,4], [1,1]])
+X = np.array([[2,3,7], [5,8,10], [1,7,3], [8,2,5], [9,4,0], [1,1,9]])
 model = Kmeans(K=2)
 model.train(X)
 print("最终质心：\n", model.centroids)
