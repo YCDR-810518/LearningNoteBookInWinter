@@ -10,35 +10,29 @@ class Kmeans:
 
     # 用来训练的函数
     # 传入的是代表了整个数据集的矩阵
-    def train(self, X, max_iters=100):
-        # 1. 随机初始化
-        if X.shape[0] < self.K:
-            raise ValueError("样本量不足")
+    def train(self, X):
+        # 初始化质心
+        random_indices = np.random.choice(X.shape[0], size=self.K, replace=False)
+        self.centroids = X[random_indices].astype(float)  # 确保是浮点数以便计算
 
-        idx = np.random.choice(X.shape[0], self.K, replace=False)
-        self.centroids = X[idx].astype(float)
-
-        for i in range(max_iters):
-            # 2. 归类 (利用你的逻辑)
+        while True:
+            # 分类 (调用classify)
             labels = self.classify(X)
 
-            # 3. 更新质心
-            new_centroids = np.zeros_like(self.centroids)
+            # 计算新质心 (利用均值函数)
+            centroids_new = np.zeros_like(self.centroids)
             for k in range(self.K):
-                cluster_points = X[labels == k]
+                points_in_k = X[labels == k]
+                if len(points_in_k) > 0:
+                    centroids_new[k] = np.mean(points_in_k, axis=0)
 
-                if len(cluster_points) > 0:
-                    new_centroids[k] = np.mean(cluster_points, axis=0)
-                else:
-                    # 揪住那个反常：处理空簇 (策略 B)
-                    new_centroids[k] = X[np.random.choice(X.shape[0])]
-
-            # 4. 判断收敛：微小的反常也是发现。如果质心位置完全不变，则退出
-            if np.allclose(self.centroids, new_centroids):
-                print(f"在第 {i} 次迭代时发现规律：质心已稳定。")
+            # 判定是否收敛 (纠着微小差异不放)
+            # 使用 allclose 判断两组坐标是否已经足够接近
+            if np.allclose(self.centroids, centroids_new):
                 break
 
-            self.centroids = new_centroids.copy()
+            self.centroids = centroids_new.copy()  # 更新质心
+        print("训练完成！")
 
 
     # 质点的质心计算及归类函数
