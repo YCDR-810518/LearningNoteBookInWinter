@@ -1,5 +1,4 @@
 # 这是一个示例 Python 脚本。
-from pyexpat import features
 
 # 按 ⌃R 执行或将其替换为您的代码。
 # 按 双击 ⇧ 在所有地方搜索类、文件、工具窗口、操作和设置。
@@ -14,7 +13,7 @@ print(animateList.describe())
 
 # 从中抽出年龄分级和时间，并进行清洗
 print()
-print('接下来是分级和时间之间的表')
+print('接下来是分级,种类和时间之间的表')
 print('展示的时间范围是1970-2026')
 rating_time_genre = animateList[['rating','year','genres']].copy()
 rating_time_genre.info()
@@ -81,19 +80,33 @@ print('数据清洗完毕！！')
 
 # 首先按年份进行排序
 # 确定划分的年份
-split_year = 2015
-# 划分训练集&测试集
-train_data = final_data[final_data['year'] <= split_year]
-test_data = final_data[final_data['year'] > split_year]
-
-# 区分特征与训练的目标
+split_year = 2022
+final_data = final_data.drop('rating', axis=1).copy()
+print('剔除了str的rating数据')
+print(final_data.head(10))
+train_data = final_data[final_data['year'] <= split_year].values
+test_data = final_data[final_data['year'] > split_year].values
 
 # 放入年与种类作为特征向量X
 feature_col = ['year'] + list(mlb.classes_)
 
-# 放入
+# 区分特征与训练的目标,x是特征，y是目标
+x_train = train_data[feature_col]
+y_train = train_data['rating_encoded']
+x_test = test_data[feature_col]
+y_test = test_data['rating_encoded']
 
-# 分出来80%用来训练，20%用来测试
+# 将测试&训练数据转换为可以导入torch的类型
+from torch.utils.data import DataLoader
+# shuffle表示是否打乱数据的顺序
+# x_train_dl = DataLoader(x_train, batch_size=32, shuffle=True)
+# y_train_dl = DataLoader(y_train, batch_size=32, shuffle=True)
+# x_test_dl = DataLoader(x_test, batch_size=32, shuffle=False)
+# y_test_dl = DataLoader(y_test, batch_size=32, shuffle=False)
+# print(len(x_train_dl.dataset), len(y_test_dl.dataset))
+
 print()
 print('接下来是训练时间')
 
+# 准备开始训练
+import torch.optim as optim
