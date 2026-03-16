@@ -1,0 +1,503 @@
+favorites	genres	type	episodes	year
+continuous	string	Movie Music ONA OVA PV Special TV TV\ Special	1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0 15.0 16.0 17.0 20.0 22.0 23.0 24.0 25.0 26.0 27.0 28.0 30.0 33.0 36.0 37.0 39.0 40.0 43.0 47.0 48.0 50.0 51.0 52.0 54.0 59.0 62.0 64.0 70.0 74.0 75.0 77.0 78.0 79.0 94.0 96.0 99.0 101.0 110.0 112.0 120.0 148.0 175.0 201.0 209.0 237.0 291.0 500.0	1970.0 1979.0 1980.0 1986.0 1989.0 1990.0 1992.0 1993.0 1995.0 1996.0 1997.0 1998.0 1999.0 2000.0 2002.0 2003.0 2004.0 2005.0 2006.0 2007.0 2008.0 2009.0 2010.0 2011.0 2012.0 2013.0 2014.0 2015.0 2016.0 2017.0 2018.0 2019.0 2020.0 2021.0 2022.0 2023.0 2024.0 2025.0 2026.0
+class	meta			
+85889	Adventure, Drama, Fantasy	TV	28.0	2023.0
+5476	Adventure, Drama, Fantasy	TV	10.0	2026.0
+240910	Action, Adventure, Drama, Fantasy	TV	64.0	2009.0
+12097	Action, Fantasy	Movie	1.0	
+201170	Drama, Sci-Fi, Suspense	TV	24.0	2011.0
+62801	Action, Drama, Suspense	TV	10.0	2019.0
+17445	Action, Comedy, Sci-Fi	TV	51.0	2015.0
+4638	Action, Comedy, Drama, Sci-Fi	Movie	1.0	
+227808	Action, Adventure, Fantasy	TV	148.0	2011.0
+2538	Action, Adventure, Fantasy	TV Special	1.0	
+8569	Action, Comedy, Sci-Fi	TV	51.0	2011.0
+3168	Action, Comedy, Sci-Fi	TV	13.0	2012.0
+17689	Drama, Sci-Fi	OVA	110.0	
+2830	Action, Comedy, Sci-Fi	TV	12.0	2017.0
+23059	Action, Adventure, Supernatural	TV	13.0	2022.0
+33031	Comedy, Romance	TV	13.0	2022.0
+21281	Drama, Romance, Supernatural	TV	13.0	2021.0
+73639	Drama, Romance	TV	24.0	2008.0
+61656	Action, Comedy, Sci-Fi	TV	201.0	2006.0
+95435	Award Winning, Drama	Movie	1.0	
+7352	Drama, Mystery	TV	24.0	2025.0
+80801	Award Winning, Drama, Sci-Fi	TV	25.0	2008.0
+15394	Drama	TV	22.0	2017.0
+2150	Action, Comedy, Sci-Fi	Movie	1.0	
+61307	Drama, Mystery, Suspense	TV	74.0	2004.0
+1093	Action, Comedy, Sci-Fi	TV	14.0	2018.0
+17226	Action, Drama, Suspense	TV Special	2.0	
+9113	Comedy, Mystery, Supernatural	TV Special	7.0	
+27026	Drama, Mystery	TV	24.0	2023.0
+2746	Action	TV	26.0	2020.0
+9723	Award Winning, Drama	Movie	1.0	
+592	Action, Drama, Suspense	Movie	1.0	
+95056	Award Winning, Drama	Movie	1.0	
+20117	Action, Adventure, Drama	TV	24.0	2023.0
+1234	Action, Comedy, Sci-Fi	TV	12.0	2018.0
+33760	Action, Comedy, Supernatural	TV	13.0	2019.0
+8162	Action, Mystery, Supernatural	Movie	1.0	
+3331	Drama, Sports	TV	47.0	1980.0
+53900	Action, Drama, Suspense	TV	16.0	2021.0
+56546	Action, Adventure, Drama	TV	24.0	2019.0
+24996	Sports	TV	75.0	2000.0
+15969	Sports	TV	10.0	2016.0
+34953	Adventure, Award Winning, Fantasy	Movie	1.0	
+32211	Action, Drama, Suspense	TV	12.0	2022.0
+6138	Drama, Sci-Fi	ONA	6.0	
+24261	Comedy, Mystery, Romance, Supernatural	TV	26.0	2013.0
+89098	Action, Award Winning, Sci-Fi	TV	26.0	1998.0
+2644	Action	TV	11.0	2025.0
+617	Action	TV	13.0	2024.0
+36103	Comedy	TV	12.0	2022.0
+1195	Action	TV	26.0	2022.0
+249284	Action, Adventure, Fantasy	TV		1999.0
+2320	Comedy, Drama, Romance	Movie	1.0	
+2086	Drama	TV	13.0	2024.0
+1580	Adventure, Mystery, Slice of Life, Supernatural	TV	10.0	2014.0
+18287	Drama, Sci-Fi	TV	12.0	2021.0
+7028	Drama	TV	25.0	2024.0
+116405	Award Winning, Drama, Sci-Fi	TV	25.0	2006.0
+12469	Action, Comedy, Supernatural	TV	12.0	2022.0
+14746	Drama, Mystery, Suspense	ONA	11.0	
+25893	Action, Supernatural	TV	23.0	2023.0
+6065	Comedy, Romance	TV	13.0	2024.0
+336		Music	1.0	
+5039	Action, Adventure, Supernatural	TV	13.0	2023.0
+1053	Award Winning, Sports	Movie	1.0	
+25152	Action, Supernatural	TV	11.0	2022.0
+458	Action	TV	13.0	2025.0
+638	Drama	TV	13.0	2026.0
+4972	Action	ONA	24.0	
+3239	Drama	TV	12.0	2017.0
+68588	Drama	TV	13.0	2018.0
+6447	Action, Drama, Romance	OVA	4.0	
+3319	Action, Supernatural	Movie	1.0	
+1643	Adventure, Mystery, Slice of Life, Supernatural	TV	10.0	2014.0
+28580	Comedy	TV	43.0	1999.0
+503	Drama, Sports	TV	10.0	2025.0
+3642	Action, Adventure, Supernatural	TV	14.0	2024.0
+1944	Sports	TV	26.0	2009.0
+31572	Adventure, Award Winning, Drama, Fantasy, Romance	Movie	1.0	
+24069	Action, Adventure, Award Winning, Fantasy	Movie	1.0	
+1736	Action, Adventure, Drama, Fantasy, Mystery	ONA	12.0	
+884	Comedy, Mystery, Supernatural	ONA	14.0	
+28265	Adventure, Mystery, Slice of Life, Supernatural	TV	26.0	2005.0
+894	Sports	Movie	1.0	
+84462	Adventure, Award Winning, Sci-Fi	TV	27.0	2007.0
+2136	Drama, Mystery, Suspense	ONA	12.0	
+89631	Drama, Romance	TV	22.0	2014.0
+1292	Action, Adventure, Drama, Fantasy	ONA	12.0	
+22272	Action, Drama, Suspense	TV	12.0	2018.0
+47563	Adventure, Drama, Fantasy, Mystery, Sci-Fi	TV	13.0	2017.0
+8482	Action, Fantasy	Movie	1.0	
+2109	Slice of Life, Supernatural	TV	13.0	2012.0
+17356	Award Winning, Drama, Sports	TV	11.0	2014.0
+9123	Award Winning, Drama, Mystery, Suspense	TV	13.0	2021.0
+65	Adventure, Drama, Fantasy	Movie	1.0	
+4739	Drama	Movie	1.0	
+793	Drama, Sci-Fi, Suspense	Music	12.0	
+34221	Action, Sci-Fi	ONA	10.0	
+184714	Supernatural, Suspense	TV	37.0	2006.0
+16099	Sports	TV	25.0	2015.0
+3920	Action, Fantasy, Mystery, Suspense	ONA	13.0	
+1710	Sports	Movie	1.0	
+1157	Slice of Life, Supernatural	TV	11.0	2017.0
+1207	Sci-Fi	Movie	1.0	
+19038	Comedy, Romance	TV	12.0	2020.0
+19191	Adventure, Drama, Fantasy, Ecchi	TV	12.0	2021.0
+1421	Sports	TV	25.0	2013.0
+31400	Action, Adventure, Drama, Fantasy, Horror	TV	25.0	1997.0
+2942	Action, Mystery	TV	11.0	2023.0
+3963	Adventure, Drama, Fantasy, Mystery, Sci-Fi	Movie	1.0	
+6887	Adventure, Drama, Fantasy, Mystery, Sci-Fi	TV	12.0	2022.0
+1194	Drama	TV	11.0	2026.0
+12165	Adventure, Comedy, Fantasy, Gourmet	TV	24.0	2024.0
+11169	Drama, Romance, Supernatural	Movie	1.0	
+14197	Award Winning, Mystery, Sci-Fi, Supernatural	Movie	1.0	
+2285	Action, Supernatural	TV	12.0	2026.0
+523	Slice of Life, Supernatural	TV	12.0	2024.0
+8243	Award Winning, Drama, Sci-Fi, Suspense	Movie	1.0	
+34788	Action, Adventure	TV	39.0	2018.0
+236	Adventure, Mystery, Slice of Life, Supernatural	Movie	1.0	
+1323	Drama, Sports	TV	13.0	2025.0
+11279	Action, Adventure, Fantasy	TV	13.0	2025.0
+187384	Action, Award Winning, Drama, Suspense	TV	25.0	2013.0
+35086	Drama, Romance	TV	47.0	2006.0
+32121	Avant Garde, Drama, Sci-Fi, Suspense	Movie	1.0	
+901	Slice of Life, Supernatural	TV	11.0	2016.0
+2478	Action, Mystery, Supernatural	Movie	1.0	
+11839	Award Winning, Slice of Life, Supernatural	Movie	1.0	
+1500	Slice of Life, Supernatural	TV	13.0	2011.0
+6478	Sports	TV	12.0	2020.0
+302	Comedy, Romance	TV Special	1.0	
+43	Action, Adventure, Fantasy	ONA	52.0	
+8137	Drama, Romance	TV	13.0	2025.0
+609	Slice of Life	TV		2022.0
+23118	Drama, Romance	Movie	1.0	
+12729	Drama, Sci-Fi, Suspense	TV	23.0	2018.0
+207	Action, Adventure, Fantasy	ONA	13.0	
+19095	Award Winning, Comedy, Mystery, Romance, Suspense	TV	11.0	2010.0
+21728	Avant Garde, Award Winning, Drama, Horror, Suspense	Movie	1.0	
+8095	Sports	TV	101.0	1993.0
+30999	Award Winning, Drama	TV	11.0	2023.0
+5990	Drama	TV	13.0	2016.0
+22967	Action, Drama, Suspense	TV	12.0	2017.0
+20678	Action, Fantasy	TV	12.0	2012.0
+9113	Drama	Movie	1.0	
+13489	Action, Supernatural	Movie	1.0	
+750	Drama, Romance	ONA	20.0	
+1502	Slice of Life, Supernatural	TV	13.0	2009.0
+6453	Drama, Romance, Supernatural	TV	25.0	2020.0
+821	Adventure, Comedy	TV	12.0	2025.0
+6043	Drama	TV	13.0	2024.0
+214	Adventure, Mystery, Slice of Life, Supernatural	TV Special	1.0	
+638	Action, Comedy, Sci-Fi	Movie	1.0	
+2948	Comedy, Drama, Romance	TV	25.0	2012.0
+40869	Action, Adventure, Comedy	TV	26.0	2004.0
+1487	Action, Sci-Fi, Supernatural	ONA	1.0	
+725	Action, Fantasy	TV	13.0	2026.0
+3493	Action, Adventure	ONA	14.0	
+956	Action, Comedy, Sci-Fi	TV	13.0	2017.0
+3279	Mystery, Sci-Fi	TV	26.0	2004.0
+95486	Action, Award Winning, Supernatural	TV	24.0	2020.0
+1267	Comedy	TV	12.0	2025.0
+3194	Slice of Life	TV	13.0	2021.0
+9688	Award Winning, Drama, Suspense	Movie	1.0	
+14778	Adventure, Comedy, Drama	TV	13.0	2018.0
+4698	Action, Drama, Fantasy, Mystery, Romance, Suspense	Movie	1.0	
+43272	Action, Adventure	TV	39.0	2016.0
+1051	Drama	Movie	1.0	
+157	Boys Love, Drama	Movie	1.0	
+53990	Action, Comedy, Supernatural	TV	12.0	2016.0
+531	Action, Adventure, Drama, Fantasy	ONA	1.0	
+63	Action, Comedy, Drama, Fantasy	Movie	1.0	
+3946	Comedy	TV	99.0	2012.0
+66358	Action, Comedy	TV	12.0	2015.0
+13748	Adventure, Fantasy	TV	23.0	2021.0
+164	Action, Adventure, Drama, Fantasy	ONA		
+32909	Mystery, Suspense	TV	12.0	2019.0
+17922	Action, Comedy	TV	25.0	2016.0
+4289	Sci-Fi, Slice of Life	TV	13.0	2008.0
+25532	Comedy	TV	26.0	2011.0
+318	Action, Adventure, Fantasy	ONA		
+1299	Action, Adventure, Drama, Fantasy, Mystery	ONA	8.0	
+3556	Action, Fantasy	Movie	1.0	
+7170	Action, Adventure, Drama, Fantasy, Mystery	ONA	15.0	
+8650	Drama, Suspense	TV	26.0	2010.0
+24559	Action, Supernatural	TV	112.0	1992.0
+11282	Mystery, Supernatural, Suspense	TV	25.0	2022.0
+3026	Comedy, Mystery, Supernatural	TV	12.0	2015.0
+2826	Drama, Sci-Fi	Movie	1.0	
+31969	Action, Adventure, Drama, Suspense	TV	24.0	2018.0
+22397	Comedy	TV	12.0	2018.0
+268	Action, Comedy	Special	2.0	
+1686	Drama, Romance, Sports	TV	24.0	2019.0
+3298	Action, Mystery, Sci-Fi, Suspense	ONA	8.0	
+22013	Action, Adventure	TV	24.0	2015.0
+15314	Action, Comedy, Supernatural	TV	12.0	2024.0
+789	Drama, Romance	ONA	5.0	
+6426	Drama, Fantasy, Suspense	TV	16.0	2024.0
+1064	Comedy, Mystery, Supernatural	TV	6.0	2019.0
+55045	Action, Fantasy	TV	12.0	2022.0
+41190	Action, Award Winning, Comedy	TV	12.0	2022.0
+12117	Action, Adventure, Fantasy	TV	62.0	1999.0
+394	Action, Adventure, Fantasy	ONA	209.0	
+78098	Sports	TV	25.0	2014.0
+1621	Action, Adventure	TV	12.0	2020.0
+99	Drama, Sports	TV	9.0	2026.0
+3691	Action, Comedy, Supernatural	TV	12.0	2025.0
+128	Adventure, Mystery, Slice of Life, Supernatural	TV Special	1.0	
+228	Slice of Life, Supernatural	Movie	1.0	
+13339	Drama, Fantasy, Suspense	TV	12.0	2021.0
+1845	Drama	TV	13.0	2019.0
+45	Action, Comedy, Sci-Fi	Movie	2.0	
+2033	Action	OVA	2.0	
+6148	Action, Adventure, Drama, Fantasy	ONA	11.0	
+8967	Award Winning, Mystery, Sci-Fi	TV	26.0	2002.0
+3414	Action, Mystery	TV	13.0	2023.0
+1731	Drama	Movie	1.0	
+884	Action, Adventure, Comedy, Drama, Mystery	ONA	10.0	
+33591	Comedy	TV	120.0	2016.0
+4442	Comedy	TV	24.0	2018.0
+9220	Horror, Mystery, Supernatural, Suspense	TV	12.0	2007.0
+768	Romance	Movie	1.0	
+2768	Comedy, Romance	Movie	1.0	
+94601	Action, Award Winning, Supernatural	TV	26.0	2019.0
+175	Drama	Special	1.0	
+81	Slice of Life, Supernatural	Special	2.0	
+8460	Drama, Fantasy	Movie	1.0	
+1117	Comedy, Romance, Supernatural	OVA	4.0	
+5052	Adventure, Comedy, Fantasy	Movie	1.0	
+42220	Comedy, Romance	TV	12.0	2019.0
+4583	Adventure, Drama, Fantasy, Ecchi	TV	12.0	2024.0
+292	Adventure, Drama, Fantasy, Mystery, Sci-Fi	Movie	1.0	
+226	Adventure	Movie	1.0	
+14931	Action, Drama, Fantasy, Mystery	TV	12.0	2017.0
+645	Sports	TV	25.0	2009.0
+45	Action, Adventure, Fantasy, Sci-Fi	ONA	33.0	
+112	Action, Fantasy	PV	1.0	
+6511	Drama, Sports	TV	23.0	2018.0
+11481	Action, Sci-Fi, Suspense	TV	13.0	2021.0
+1105	Drama, Suspense	Movie	1.0	
+7118	Drama, Romance	Movie	1.0	
+59912	Award Winning, Drama, Suspense	TV	12.0	2011.0
+477		Movie	1.0	
+144	Comedy	OVA	2.0	
+1773	Action, Sci-Fi	Movie	1.0	
+153	Action, Adventure, Fantasy, Sci-Fi	ONA	175.0	
+613	Drama, Sports	TV	13.0	2025.0
+16377	Drama	TV	22.0	2016.0
+11099	Action, Supernatural	Movie	1.0	
+5531	Sports	TV	13.0	2020.0
+1659	Drama, Romance, Sports	TV	25.0	2013.0
+472	Slice of Life	Movie	1.0	
+116733	Avant Garde, Award Winning, Drama, Sci-Fi, Suspense	TV	26.0	1995.0
+3096	Drama	TV	13.0	2024.0
+3011	Award Winning, Comedy	Movie	1.0	
+2356	Action, Fantasy, Mystery, Romance, Suspense	Movie	1.0	
+3948	Action, Mystery, Supernatural	Movie	1.0	
+2409	Drama, Sports	TV	79.0	1970.0
+3083	Drama, Romance, Sports	TV	50.0	2009.0
+874	Drama, Romance	Movie	1.0	
+6055	Adventure, Award Winning, Drama, Fantasy	Movie	1.0	
+13837	Action, Drama	TV	26.0	1998.0
+2350	Comedy, Romance	TV	12.0	2022.0
+501	Action, Adventure, Fantasy	ONA	237.0	
+13429	Slice of Life	TV	12.0	2014.0
+577	Drama, Sports	Movie	1.0	
+38	Action, Adventure, Fantasy	ONA	48.0	
+119	Action, Adventure	TV	13.0	2026.0
+126		Movie	1.0	
+14901	Comedy, Romance	TV	12.0	2020.0
+92	Action, Comedy, Sci-Fi	Special	1.0	
+984	Slice of Life	TV	12.0	2021.0
+16136	Adventure, Drama, Supernatural	TV	20.0	2021.0
+282	Drama	TV	17.0	2022.0
+23731	Action, Mystery, Supernatural	TV	13.0	2007.0
+3398	Drama, Romance	TV	40.0	1979.0
+980	Drama	Special	1.0	
+1611	Romance, Supernatural	TV	12.0	2025.0
+121	Action, Mystery	Movie	1.0	
+3831	Drama	TV	13.0	2016.0
+26554	Drama, Sci-Fi	TV	11.0	2021.0
+5574	Adventure, Comedy, Fantasy	TV	11.0	2024.0
+23539	Action, Horror, Supernatural	OVA	10.0	
+4653	Action, Supernatural	TV	7.0	2021.0
+10990	Action, Comedy, Fantasy	TV	12.0	2021.0
+503	Adventure, Drama, Fantasy	Movie	1.0	
+40231	Action, Mystery, Sci-Fi, Suspense	TV	22.0	2012.0
+177	Adventure, Comedy, Fantasy	Movie	1.0	
+39036	Adventure, Drama, Fantasy, Ecchi	TV	11.0	2021.0
+1375	Comedy, Drama, Romance	TV	25.0	2011.0
+116	Slice of Life, Supernatural	OVA	1.0	
+139	Slice of Life, Supernatural	Movie	1.0	
+72	Drama, Sci-Fi	Movie	12.0	
+973	Sci-Fi	OVA	6.0	
+9629	Action, Fantasy	TV	13.0	2015.0
+4243	Sports, Suspense	TV	25.0	2008.0
+12426	Drama, Fantasy, Suspense	TV	13.0	2020.0
+51180	Mystery, Romance, Supernatural	TV	15.0	2009.0
+36640	Action, Horror, Sci-Fi, Suspense	TV	24.0	2014.0
+126	Action, Fantasy	ONA	4.0	
+6036	Slice of Life	TV	11.0	2011.0
+148	Drama, Sci-Fi	Movie	12.0	
+443	Comedy	Movie	2.0	
+394	Boys Love	Movie	1.0	
+68	Slice of Life, Supernatural	Special	2.0	
+1926	Action, Drama, Sci-Fi	OVA	26.0	
+194		Music	1.0	
+476	Sports	TV	25.0	2010.0
+1122	Sports	TV	51.0	2015.0
+695	Adventure, Drama	TV	33.0	1995.0
+1789	Sports	TV	13.0	2021.0
+219	Fantasy	Music	1.0	
+2418	Sci-Fi	Music	1.0	
+439	Action, Adventure, Fantasy	OVA	8.0	
+29866	Comedy, Drama, Romance	TV	24.0	2006.0
+93		Music	1.0	
+509	Drama	ONA	6.0	
+1626	Adventure, Comedy	TV	11.0	2023.0
+4310	Adventure, Drama, Romance, Supernatural	TV	12.0	2009.0
+16759	Slice of Life, Supernatural	TV	13.0	2008.0
+1049	Action, Drama	TV	4.0	2014.0
+51030	Mystery, Suspense	TV	12.0	2016.0
+888	Comedy, Sci-Fi	Special	1.0	
+956	Action	TV	39.0	2013.0
+6232	Action, Sci-Fi	Movie	1.0	
+1532	Drama, Fantasy	TV	50.0	2009.0
+3596	Drama, Sci-Fi, Suspense	Movie	1.0	
+5221	Sports	TV	25.0	2015.0
+10935	Action, Adventure, Romance	TV	12.0	2010.0
+2997	Award Winning, Comedy, Drama	Movie	1.0	
+143	Action, Adventure, Fantasy, Sci-Fi	ONA	26.0	
+7318	Drama, Romance	TV	12.0	2012.0
+18076	Boys Love, Drama	TV	11.0	2019.0
+293	Adventure, Mystery	Movie	1.0	
+11032	Action, Comedy, Fantasy	TV	12.0	2021.0
+9161	Drama	TV	26.0	2004.0
+33110	Drama, Supernatural	TV	11.0	2011.0
+119705	Action, Adventure, Fantasy	TV	500.0	2007.0
+3310	Mystery, Suspense	TV	13.0	2021.0
+55	Action, Adventure, Fantasy	ONA		
+665	Drama, Romance, Supernatural	Movie	1.0	
+102	Sports	OVA	2.0	
+111	Drama, Sci-Fi	Movie	4.0	
+1082	Sports	TV	52.0	2019.0
+7563	Adventure, Drama, Fantasy	TV	13.0	2003.0
+857	Adventure, Fantasy, Slice of Life	TV	78.0	1990.0
+77	Action, Adventure, Comedy, Drama, Mystery, Sci-Fi, Supernatural	ONA	10.0	
+92	Sports	Movie	1.0	
+695	Comedy	TV	11.0	2014.0
+6586	Boys Love	Movie	1.0	
+55	Action, Comedy, Sci-Fi	Special	1.0	
+10368	Action, Comedy, Romance	TV	94.0	1996.0
+14221	Award Winning, Mystery, Sci-Fi, Suspense	Movie	1.0	
+13303	Award Winning, Drama, Romance, Supernatural	Movie	1.0	
+83	Horror, Mystery, Supernatural, Suspense	Movie	1.0	
+1532	Action, Adventure, Fantasy	TV	25.0	2024.0
+5190	Action, Comedy, Fantasy	TV	12.0	2023.0
+476	Sci-Fi, Suspense	TV Special	1.0	
+1941	Comedy, Sci-Fi	TV	13.0	2014.0
+22959	Action, Adventure, Fantasy	TV	24.0	2019.0
+11936	Slice of Life	TV	12.0	2018.0
+6249	Award Winning, Comedy, Drama	TV	24.0	2014.0
+10846	Suspense	TV	26.0	2007.0
+837	Action, Adventure, Drama, Fantasy, Romance	OVA	3.0	
+4805	Adventure, Award Winning, Fantasy	Movie	1.0	
+31141	Adventure, Comedy	TV	24.0	2019.0
+34400	Action, Fantasy	TV	13.0	2011.0
+10550	Award Winning, Drama, Romance, Supernatural	Movie	1.0	
+1231	Adventure, Comedy	TV	12.0	2025.0
+230	Action, Adventure, Comedy, Drama, Mystery	ONA	10.0	
+1910	Action, Adventure, Fantasy	TV	11.0	2023.0
+110	Action, Adventure, Fantasy, Romance	ONA	24.0	
+4986	Comedy, Romance	TV	23.0	2007.0
+9212	Adventure, Award Winning, Supernatural	Movie	1.0	
+234	Sports	OVA	1.0	
+277	Sports	TV Special	1.0	
+260	Action, Adventure, Fantasy	OVA	14.0	
+1027	Action, Adventure	TV	12.0	2018.0
+3010	Suspense	TV	26.0	2011.0
+3842	Comedy, Romance, Supernatural	TV	12.0	2015.0
+22410	Drama, Fantasy, Horror, Mystery, Sci-Fi, Suspense	TV	25.0	2012.0
+3051	Action, Adventure	Movie	1.0	
+1290	Action, Sci-Fi	TV	14.0	2021.0
+11978	Adventure, Comedy, Fantasy	TV	10.0	2017.0
+2977	Action, Adventure, Award Winning, Drama, Fantasy, Romance	Movie	1.0	
+1660	Action, Mystery, Supernatural	Movie	1.0	
+4100	Award Winning, Drama, Romance, Sci-Fi	TV	26.0	2003.0
+5421	Adventure, Supernatural	Movie	1.0	
+415	Drama	TV	13.0	2021.0
+8529	Adventure, Mystery, Sci-Fi, Slice of Life	TV	12.0	2017.0
+67	Adventure, Comedy, Mystery	TV Special	1.0	
+75115	Drama, Fantasy, Suspense	TV	25.0	2016.0
+2572	Action, Adventure, Supernatural	TV	12.0	2026.0
+1249	Action, Fantasy	Movie	1.0	
+220	Slice of Life	Movie	1.0	
+1701	Award Winning, Drama	Movie	1.0	
+1744	Drama, Sci-Fi	TV	25.0	2016.0
+14849	Comedy	TV	12.0	2012.0
+50800	Drama, Romance, Supernatural	TV	13.0	2018.0
+6678	Adventure, Award Winning, Comedy, Drama, Fantasy	Movie	1.0	
+9662	Award Winning, Drama	TV	39.0	1997.0
+5156	Action, Fantasy	TV	24.0	2025.0
+44	Action, Adventure, Comedy, Fantasy	ONA	59.0	
+1127	Drama	TV	13.0	2023.0
+159	Action, Adventure, Fantasy	ONA		
+6649	Action, Fantasy, Sci-Fi	TV	12.0	2024.0
+3131	Award Winning, Drama	Movie	1.0	
+3253	Fantasy	Movie	1.0	
+417	Comedy, Romance	TV	11.0	2010.0
+260	Suspense	Music		
+983	Drama, Suspense	Movie	1.0	
+18018	Action, Comedy, Fantasy	TV	20.0	2022.0
+5691	Drama, Romance	Movie	1.0	
+7356	Action	TV	25.0	2022.0
+3016	Award Winning, Fantasy	Movie	1.0	
+17494	Action, Adventure, Sci-Fi	TV	26.0	1998.0
+1787	Action, Comedy	TV	13.0	2025.0
+7643	Adventure, Mystery, Sci-Fi	TV	13.0	2023.0
+6286	Comedy, Romance	TV	12.0	2023.0
+108	Sports	Movie	1.0	
+1688	Action, Adventure, Drama, Fantasy, Horror	Movie	1.0	
+435	Comedy	TV Special	1.0	
+18275	Adventure, Drama, Romance, Supernatural	TV	13.0	2008.0
+603	Action, Comedy, Drama, Mystery	ONA	10.0	
+2112	Drama, Romance	Special	4.0	
+353	Sports	TV	26.0	2007.0
+41952	Action, Adventure, Comedy, Fantasy	TV	291.0	1989.0
+502	Award Winning, Comedy, Drama, Romance	Movie	1.0	
+582	Comedy, Romance	TV	12.0	2026.0
+4543	Romance	TV	12.0	2024.0
+7808	Adventure, Drama, Fantasy, Ecchi	TV	12.0	2023.0
+5084	Action, Mystery	TV	12.0	2019.0
+81	Action, Mystery	Movie	1.0	
+139	Comedy, Sci-Fi	Movie	1.0	
+16180	Comedy, Romance	TV	13.0	2015.0
+2307	Action, Adventure, Fantasy, Romance	TV	26.0	2009.0
+1906	Comedy, Drama, Romance	TV	96.0	1986.0
+4418	Sports	TV	25.0	2013.0
+652	Comedy, Drama, Mystery, Supernatural	TV	13.0	2008.0
+1438	Sports	TV	26.0	2004.0
+18085	Drama, Romance, Supernatural	TV	25.0	2019.0
+7662	Action, Comedy	TV	13.0	2022.0
+3275	Comedy	TV	77.0	2011.0
+5769	Slice of Life, Supernatural	TV	12.0	2021.0
+7816	Action, Adventure, Fantasy	TV	25.0	2013.0
+3556	Action, Adventure, Fantasy	Movie	1.0	
+24	Action, Adventure, Fantasy	ONA	36.0	
+4282	Romance	TV	12.0	2025.0
+1496	Action, Award Winning	Movie	1.0	
+7321	Comedy	TV	12.0	2018.0
+348	Action	ONA	3.0	
+80	Action, Adventure, Fantasy	TV Special	1.0	
+915	Action, Sci-Fi	TV	13.0	2019.0
+102	Action, Adventure, Fantasy	ONA	54.0	
+10471	Action, Adventure, Mystery	TV	23.0	2020.0
+1207	Action, Drama	TV	13.0	1999.0
+2921	Action, Fantasy, Mystery	TV	12.0	2022.0
+1035	Action, Adventure, Fantasy	TV	12.0	2026.0
+19819	Action, Adventure, Fantasy	TV	12.0	2024.0
+61	Drama, Sci-Fi	Movie	4.0	
+15234	Award Winning, Comedy	TV	26.0	2010.0
+17327	Action, Fantasy	TV	12.0	2014.0
+272	Adventure, Drama, Fantasy, Mystery, Sci-Fi	Movie	1.0	
+105	Action, Mystery	Movie	1.0	
+250	Comedy, Fantasy	ONA	30.0	
+2247	Sci-Fi, Sports	TV	13.0	2021.0
+195	Sports	TV	26.0	2008.0
+195	Drama, Mystery, Supernatural	OVA	2.0	
+958	Drama, Romance	TV	12.0	2006.0
+321	Action, Adventure, Fantasy	OVA	8.0	
+39544	Romance	TV	13.0	2021.0
+15969	Adventure, Comedy, Mystery	TV		1996.0
+14696	Adventure, Comedy, Drama, Romance	TV	70.0	1998.0
+5634	Boys Love	TV	12.0	2022.0
+1096	Drama, Romance, Supernatural	TV	13.0	2025.0
+66	Action, Adventure, Fantasy	ONA	26.0	
+1847	Comedy, Romance	Movie	1.0	
+8385	Drama, Romance, Sports	TV	25.0	2011.0
+125		Movie	1.0	
+211	Comedy, Romance, Supernatural	OVA	1.0	
+464	Sci-Fi	Movie	1.0	
+2152	Comedy, Drama, Romance	TV	13.0	2013.0
+9645	Comedy, Drama, Romance	TV	25.0	2010.0
+348	Action, Adventure, Comedy, Drama	Movie	1.0	
+3355	Action	TV	12.0	2006.0
+8294	Mystery, Suspense	TV	11.0	2020.0
+312	Sports	TV	26.0	2006.0
+344	Comedy, Mystery, Romance, Suspense	ONA	6.0	
+111	Slice of Life, Supernatural	Movie	1.0	
+1267	Slice of Life	TV	12.0	2015.0
+685	Action, Adventure, Fantasy	Movie	1.0	
+1423	Action, Drama	TV	24.0	2004.0
+3763	Sports	TV	24.0	2017.0
+549	Action, Mystery, Supernatural	TV	13.0	2025.0
+4284	Romance, Sports	TV	25.0	2024.0
+6855	Action, Mystery	TV	12.0	2016.0
+7971	Drama, Fantasy, Romance	Movie	1.0	
+832	Sci-Fi, Slice of Life	TV	26.0	2006.0
+36917	Comedy, Romance	TV	26.0	2006.0
+7642	Horror, Mystery, Suspense	TV	24.0	2007.0
