@@ -14,16 +14,16 @@
 >
 >  **搭建环境可能会遇到各种奇怪的bug，善用搜索引擎，问题一定可以得到解决**
 
-1. [注册GitHub账号，安装Git，并学会使用**版本控制，分支控制 ** ✅](学习笔记/git学习笔记)
+1. [注册GitHub账号，安装Git，并学会使用**版本控制，分支控制 ** ✅](https://github.com/YCDR-810518/LearningNoteBookInWinter/tree/main/学习笔记/git学习笔记)
 
 **python**
 
-[学习**json库**（✅）](ProjectCode/YCnotBookforcode)
+[学习**json库**（✅）](https://github.com/YCDR-810518/LearningNoteBookInWinter/tree/main/ProjectCode/YCnotBookforcode/第一周的项目)
 
 **数学基础**
 
-1. [**线性代数：**](学习笔记/线性代数)矩阵运算，矩阵与向量的关系，线性变换，点乘、叉乘，矩阵求导（时间较短不用全部学完，学会这些知识点即可）✅
-2. 学习**图论与多智能体系统一致性**的理论基础（对ppt思考题进行回答）[推导过程](学习笔记/图论)
+1. [**线性代数：**](https://github.com/YCDR-810518/LearningNoteBookInWinter/tree/main/学习笔记/线性代数)矩阵运算，矩阵与向量的关系，线性变换，点乘、叉乘，矩阵求导（时间较短不用全部学完，学会这些知识点即可）✅
+2. 学习**图论与多智能体系统一致性**的理论基础（对ppt思考题进行回答）[推导过程](https://github.com/YCDR-810518/LearningNoteBookInWinter/tree/main/学习笔记/图论)
 3. 微分基础，**多元微分**✅
 
 ## 任务
