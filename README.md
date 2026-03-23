@@ -1,7 +1,7 @@
 # LearningNoteBookInWinter
 <img src="https://raw.githubusercontent.com/YCDR-810518/imageBed/main/2026/02/upgit_20260206_1770344131.webp" alt="OIP" style="zoom:25%;" />
 
-yc用来放学习笔记和小项目的库
+yc用来放学习笔记和项目的库
 
 ## 相关笔记、源代码和资料的大体结构如下
 
@@ -22,7 +22,7 @@ yc用来放学习笔记和小项目的库
 
 ## 第一周的任务&项目代码
 
-### [我完成的任务&任务内容](https://github.com/YCDR-810518/LearningNoteBookInWinter/blob/main/学习资料/python学习的相关资料/ai组的学习计划%26路径/2026-1/第一周小组任务.md)
+### [我完成的任务&任务内容](https://github.com/YCDR-810518/LearningNoteBookInWinter/blob/main/学习资料/python学习的相关资料/ai组的学习计划%26路径/2026-1/)
 
 [相关任务代码文件](https://github.com/YCDR-810518/LearningNoteBookInWinter/tree/main/ProjectCode/YCnotBookforcode)
 
