@@ -22,7 +22,7 @@ yc用来放学习笔记和项目的库
 
 ## 第一周的任务&项目代码
 
-### [我完成的任务&任务内容](https://github.com/YCDR-810518/LearningNoteBookInWinter/blob/main/学习资料/python学习的相关资料/ai组的学习计划%26路径/2026-1/)
+### [我完成的任务&任务内容](学习资料/python学习的相关资料/ai组的学习计划&路径/2026-1)
 
 [相关任务代码文件](https://github.com/YCDR-810518/LearningNoteBookInWinter/tree/main/ProjectCode/YCnotBookforcode)
 
