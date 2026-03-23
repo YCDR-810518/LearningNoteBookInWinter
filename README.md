@@ -26,3 +26,24 @@ yc用来放学习笔记和项目的库
 
 [相关任务代码文件](https://github.com/YCDR-810518/LearningNoteBookInWinter/tree/main/ProjectCode/YCnotBookforcode)
 
+## 第二周的任务(中期考核)
+
+### 任务要求
+
+![截屏2026-03-23 20.28.33](https://raw.githubusercontent.com/YCDR-810518/imageBed/main/picGo/截屏2026-03-23 20.28.33.png)
+
+### 项目/任务的相关文件
+
+* 项目的详细文档
+  * [项目详细文档.pdf/.docx]()
+
+* 项目文件
+  * [代码文件夹]()
+    * README.md
+    * .....
+  * [复现结果文件夹]()
+    * Fig3
+    * Fig5
+
+* [文献阅读笔记]()
+* [答辩ppt]()
