@@ -30,7 +30,7 @@ yc用来放学习笔记和项目的库
 
 ### 任务要求
 
-![截屏2026-03-23 20.28.33](https://raw.githubusercontent.com/YCDR-810518/imageBed/main/picGo/截屏2026-03-23 20.28.33.png)
+![截屏2026-03-23 20.28.33](https://raw.githubusercontent.com/YCDR-810518/imageBed/main/picGo/截屏2026-03-2320.28.33.png)
 
 ### 项目/任务的相关文件
 
