@@ -3,4 +3,10 @@ name = "pfcprojectcode"
 version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "cvxpy>=1.8.2",
+    "matplotlib>=3.10.8",
+    "networkx>=3.6.1",
+    "numpy>=2.4.3",
+    "scipy>=1.17.1",
+]
