@@ -1,11 +1,9 @@
 import numpy as np
 import json
-import matplotlib.pyplot as plt
-import networkx as nx
 from scipy.optimize import minimize
-
 # 用于凸优化的包
 import cvxpy as cp
+
 
 # 所有的超级参数放置处,避免乱飞
 class SimulationConfig:
@@ -143,7 +141,7 @@ class ACSOptimizer:
         res = minimize(objective, eps0, method='SLSQP', bounds=bounds, constraints=[constraints])
 
         if not res.success:
-            print("  [警告] 子问题2未完美收敛:", res.message)
+            print("[警告] 子问题2未完美收敛:", res.message)
 
         return res.x
     # 控制子问题进行循环,直到两次的差值小于tol
@@ -197,8 +195,9 @@ def get_f_epsilon(eps, config):
     return term ** 2
 
 # 下面是用来测试的测试逻辑
-# 已注释
-if __name__ != "__main__":
+if __name__ == "__main__":
+    # 用于绘图
+    import draw
     with open("initial_edges.json", "r") as f:
         graph_topology = json.load(f)
         graph_topology = np.array(graph_topology['initial_edges'[:]])
@@ -207,18 +206,39 @@ if __name__ != "__main__":
         # print(edges)
         eps_max = np.array([0.4, 0.9, 0.55, 0.35, 0.8, 0.45, 0.7, 0.5, 0.52, 0.58])
         print("正在初始化环境配置...")
-        # 测试参数：e_R = 16 (论文 Example 1 的中间档), B = 6
-        config = SimulationConfig(e_R=16.0, B=6.0, epsilon_max=eps_max)
-        topology = GraphTopology(N=config.N, edges_list=edges)
-        optimizer = ACSOptimizer()
+        # 循环测试三个e_R的值
+        for i in [8,16,64]:
+            print(f"循环测试中，e_R为{i}")
+            config = SimulationConfig(e_R=i, B=6.0, epsilon_max=eps_max)
+            topology = GraphTopology(N=config.N, edges_list=edges)
+            optimizer = ACSOptimizer()
 
-        # 启动！
-        W_opt, y_opt, eps_opt, history = optimizer.run_acs(config, topology)
+            # 启动！
+            W_opt, y_opt, eps_opt, history = optimizer.run_acs(config, topology)
 
-        if eps_opt is not None:
-            print("\n 最终计算得出的各节点隐私参数 eps:")
-            for i, val in enumerate(eps_opt):
-                print(f"Agent {i + 1}: {val:.4f} (上限: {eps_max[i]:.4f})")
-        # 绘图复现
-        import draw
-        draw.plot_results(W_opt, eps_opt, eps_max, config, edges)
+            if eps_opt is not None:
+                print("\n 最终计算得出的各节点隐私参数 eps:")
+                for i, val in enumerate(eps_opt):
+                    print(f"Agent {i + 1}: {val:.4f} (上限: {eps_max[i]:.4f})")
+            # 绘图复现
+
+            draw.plot_results(W_opt, eps_opt, eps_max, config)
+            print(f"循环测试e_R为{i}的测试轮完成✅")
+
+        # 尝试读取你的 json 文件
+        try:
+            with open("initial_edges.json", "r") as f:
+                data = json.load(f)
+                edges = np.array(data['initial_edges'])
+        except Exception as e:
+            print(f"读取文件失败，使用默认边表。错误: {e}")
+            edges = np.array(
+                [[1, 4], [1, 7], [1, 2], [1, 10], [2, 3], [3, 4], [3, 5], [4, 5], [5, 6], [6, 7], [6, 9], [7, 8],
+                 [8, 9],
+                 [8, 10], [9, 10]])
+
+        eps_max = np.array([0.4, 0.9, 0.55, 0.35, 0.8, 0.45, 0.7, 0.5, 0.52, 0.58])
+
+        # 运行全套对比实验
+        draw.run_comparison_experiment(eps_max, edges)
+
