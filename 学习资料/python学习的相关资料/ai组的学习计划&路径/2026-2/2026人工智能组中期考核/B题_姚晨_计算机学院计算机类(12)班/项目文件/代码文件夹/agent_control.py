@@ -185,7 +185,7 @@ u_attack:注入的误差大小
 config:相关的参数大小
 target_coords:最终要形成的图案形状
 """
-def simulate_formation_with_attack(W, target_coords, config, u_attack=0.1, steps=500, dt=0.1):
+def simulate_formation_with_attack(W, target_coords, config, u_attack=0.1, steps=1000, dt=0.05):
     N = config.N
     # 加载初始位置
     with open("initial_position.json", "r") as f:
