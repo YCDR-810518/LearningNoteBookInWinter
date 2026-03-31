@@ -1,0 +1,10 @@
+[project]
+name = "linermodel"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.14"
+dependencies = [
+    "kaggle>=2.0.0",
+    "numpy>=2.4.4",
+    "pandas>=3.0.2",
+]
