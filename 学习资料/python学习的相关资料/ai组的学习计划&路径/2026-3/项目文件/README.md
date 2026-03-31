@@ -14,4 +14,10 @@
 
 线性模型；对于Wine Quality（红酒质量）数据集，利用线性回归模型对红酒质量进行预测评分，利用逻辑 回归模型区分好/坏酒（质量>6为好酒），要求不能利用现成机器学习库（如sklearn、scipy）；分析两个模型 的异同点，并进行模型评估
 
-[线性模型项目代码]()
+[线性模型项目代码](https://github.com/YCDR-810518/LearningNoteBookInWinter/tree/main/ProjectCode/LinerModel)
+
+2. K-Means聚类模型：对于Iris（莺尾花）数据集，利用K-Means算法进行聚类，并进行模型评估
+
+[代码](https://github.com/YCDR-810518/LearningNoteBookInWinter/tree/main/ProjectCode/Kmeans_iris)
+
+3. [QG的数据集分析]()
