@@ -117,18 +117,58 @@ class Config:
 class BinaryClassifier(nn.Module):
     def __init__(self, input_dim):
         super(BinaryClassifier, self).__init__()
-        # 将输入的维度映射到 128 维
-        self.layer1 = nn.Linear(input_dim, 128)
-        self.dropout = nn.Dropout(0.4) # 随机丢弃 50% 神经元，防止过拟合
-        # 输出分类概率
-        self.layer2 = nn.Linear(128, 1)
-        # 激活函数
+        self.layer1 = nn.Linear(input_dim, 64) # 样本极少，隐藏层也要小
+        self.layer2 = nn.Linear(64, 1)
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
         x = torch.relu(self.layer1(x))
-        x = self.dropout(x)
         x = self.sigmoid(self.layer2(x))
         return x
+
+
+import torch
+import torch_directml
+
+"""
+iters:计算迭代次数，即精度
+"""
+def gpu_pca(X_np, n_components, device, iters=5000):
+    print(f"🚀 GPU PCA  (设备: {device})")
+
+    # 搬运并中心化
+    X = torch.FloatTensor(X_np).to(device)
+    X = X - X.mean(dim=0)
+
+    # 迭代寻找主成分
+    n_samples, n_features = X.shape
+    components = []
+    X_residual = X.clone()  # 剩余信号
+
+    for i in range(n_components):
+        # 随机初始化一个向量
+        v = torch.randn(n_features, 1).to(device)
+
+        # 幂迭代核心：只用矩阵乘法，避开所有不支持的算子
+        for _ in range(iters):
+            # v = (X^T * (X * v)) -> 这种写法比算协方差矩阵更省显存
+            v = torch.mm(X_residual.t(), torch.mm(X_residual, v))
+            v = v / torch.norm(v)
+
+        # 提取当前主成分的投影
+        projection = torch.mm(X_residual, v)
+
+        # 从剩余信号中减去已找到的分量 (Deflation)
+        X_residual = X_residual - torch.mm(projection, v.t())
+
+        components.append(v.t())
+        if (i + 1) % 10 == 0:
+            print(f"已提取 {i + 1}/{n_components} 个成分...")
+
+    all_components = torch.cat(components, dim=0)
+    X_pca = torch.mm(X - X.mean(dim=0), all_components.t())
+
+    print("✅ gpu PCA 完成！")
+    return X_pca
 
 
