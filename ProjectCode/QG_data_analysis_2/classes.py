@@ -1,6 +1,8 @@
 import numpy as np
 import torch
 import torch.nn as nn
+
+
 class SVM:
     """
     支持向量机（二分类）的自定义实现，使用线性核和梯度下降优化
@@ -116,15 +118,16 @@ class Config:
 
 class BinaryClassifier(nn.Module):
     def __init__(self, input_dim):
-        super(BinaryClassifier, self).__init__()
-        self.layer1 = nn.Linear(input_dim, 64) # 样本极少，隐藏层也要小
-        self.layer2 = nn.Linear(64, 1)
+        super().__init__()
+        self.layer1 = nn.Linear(input_dim, 16)
+        self.dropout = nn.Dropout(0.3) # 加入随机失活
+        self.layer2 = nn.Linear(16, 1)
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
         x = torch.relu(self.layer1(x))
-        x = self.sigmoid(self.layer2(x))
-        return x
+        x = self.dropout(x)
+        return self.sigmoid(self.layer2(x))
 
 
 import torch
@@ -133,7 +136,7 @@ import torch_directml
 """
 iters:计算迭代次数，即精度
 """
-def gpu_pca(X_np, n_components, device, iters=5000):
+def gpu_pca(X_np, n_components, device, iters= 1000):
     print(f"🚀 GPU PCA  (设备: {device})")
 
     # 搬运并中心化
@@ -169,6 +172,6 @@ def gpu_pca(X_np, n_components, device, iters=5000):
     X_pca = torch.mm(X - X.mean(dim=0), all_components.t())
 
     print("✅ gpu PCA 完成！")
-    return X_pca
+    return X_pca, all_components
 
 
