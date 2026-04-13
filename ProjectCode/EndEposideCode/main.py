@@ -2,6 +2,7 @@ import pandas as pd
 from pathlib import Path
 from utils import G
 from utils import infer_trajectory
+from utils import calculate_f_score, calculate_jsd, get_preprocessed_paths
 
 # 清洗逻辑
 print(f"当前图节点数: {G.number_of_nodes()}")
@@ -186,40 +187,159 @@ def run_benchmark(trip_counts, total_flow):
             print(f"  [{name}] 平均相对误差: {avg_err:.4f}")
 
     # 绘制复现图表
-    plot_results(results)
+    plot_results(results,
+                 x_vals=HEIGHTS,
+                 x_label='Prefix Tree Height',
+                 y_label='Average Relative Error',
+                 title='Figure 3: Impact of Tree Height')
 
 
-def plot_results(results):
+
+def plot_results(results, x_vals, x_label='Epsilon', y_label='Average Relative Error', title='Experiment Result'):
+    """
+    通用绘图函数
+    results: 字典 { "算法名": [误差列表] }
+    x_vals: X 轴对应的数值列表 (如 EPSILONS 或 K_VALUES)
+    """
     plt.figure(figsize=(8, 6))
 
-    # 按照论文颜色和样式配置
+    # 颜色和样式配置
     configs = {
         "Our Algorithm": {"color": "red", "marker": "D", "linewidth": 2},
-        "Li's Algorithm": {"color": "purple", "marker": "x", "linewidth": 1.5},
         "SeqPT": {"color": "black", "marker": "^", "linewidth": 1.5},
-        "SafePath": {"color": "blue", "marker": "s", "linewidth": 1.5}
+        "SafePath": {"color": "blue", "marker": "s", "linewidth": 1.5},
+        "Li's Algorithm": {"color": "purple", "marker": "x", "linewidth": 1.5}
     }
 
-    for name, errors in results.items():
-        # 过滤掉 NaN 值
-        valid_h = [HEIGHTS[i] for i, e in enumerate(errors) if not np.isnan(e)]
-        valid_e = [e for e in errors if not np.isnan(e)]
+    for name, y_vals in results.items():
+        # 确保只画出非 NaN 的点
+        # 修复 IndexError：使用传入的 x_vals 而不是全局变量 HEIGHTS
+        valid_x = [x_vals[i] for i, e in enumerate(y_vals) if not np.isnan(e)]
+        valid_y = [e for e in y_vals if not np.isnan(e)]
 
-        plt.plot(valid_h, valid_e, label=name,
-                 color=configs[name]["color"],
-                 marker=configs[name]["marker"],
-                 linewidth=configs[name]["linewidth"])
+        config = configs.get(name, {"color": None, "marker": "o", "linewidth": 1})
 
-    plt.xlabel('Prefix Tree Height', fontsize=12)
-    plt.ylabel('Average Relative Error', fontsize=12)
-    plt.title(f'Data Utility Comparison (Epsilon={EPSILON})', fontsize=14)
-    plt.grid(True, linestyle='--', alpha=0.6)
+        plt.plot(valid_x, valid_y, label=name,
+                 color=config["color"],
+                 marker=config["marker"],
+                 linewidth=config["linewidth"])
+
+    plt.xlabel(x_label, fontsize=12)
+    plt.ylabel(y_label, fontsize=12)
+    plt.title(title)
     plt.legend()
-    plt.xticks(HEIGHTS)
+    plt.grid(True, linestyle='--', alpha=0.7)
     plt.show()
 
 
-# --- 在 main.py 的最后执行 ---
+# --- main.py ---
+
+def run_extended_experiments(trip_counts, total_flow):
+    # 1. 预处理：只算一遍 Dijkstra
+    path_list = get_preprocessed_paths(trip_counts)
+
+    EPSILONS = [0.1, 0.5, 1.0, 1.5, 2.0]
+    K_VALUES = [10, 20, 30, 40, 50]
+    FIXED_HEIGHT = 15
+    FIXED_EPSILON = 1.0
+
+    models = {
+        "Our Algorithm": LagrangianTrie,
+        "SeqPT": SeqPTTrie,
+        "SafePath": SafePathTrie
+    }
+
+    err_vs_eps = {name: [] for name in models.keys()}
+    jsd_vs_eps = {name: [] for name in models.keys()}
+    fscore_vs_k = {name: [] for name in models.keys()}
+
+    # 建立基准 (Raw Trie)
+    print("\n构建原始前缀树...")
+    raw_trie = TrajectoryTrie(max_height=FIXED_HEIGHT, total_trajectories=total_flow)
+    for path, count in path_list:
+        raw_trie.insert(path, count=count)
+    raw_results = raw_trie.get_raw_data(only_leaves=False)
+
+    # 遍历 Epsilon (Figure 4 & 6)
+    print("开始测试不同 Epsilon 下的表现...")
+    for eps in EPSILONS:
+        print(f"  测试 Epsilon = {eps}")
+        for name, ModelClass in models.items():
+            # 实例化新树
+            trie = ModelClass(max_height=FIXED_HEIGHT, total_trajectories=total_flow)
+
+            # 批量带权重插入
+            for path, count in path_list:
+                trie.insert(path, count=count)
+
+            trie.allocate_budget(total_epsilon=eps)
+            trie.apply_noise_and_prune(k=K_VAL, b=B_VAL)
+            sanitized_results = trie.get_sanitized_data(only_leaves=False)
+
+            # 计算误差
+            errors = calculate_relative_error(raw_trie, sanitized_results, total_flow)
+            err_vs_eps[name].append(np.nanmean(errors))
+            jsd_vs_eps[name].append(calculate_jsd(raw_results, sanitized_results))
+
+
+
+    # 遍历 K 值 (Figure 5)
+    print("\n开始测试 Top-K F-Score...")
+    for k_val in K_VALUES:
+        print(f"  测试 K = {k_val}")
+        for name, ModelClass in models.items():
+            trie = ModelClass(max_height=FIXED_HEIGHT, total_trajectories=total_flow)
+
+            # 批量插入
+            for path, count in path_list:
+                trie.insert(path, count=count)
+
+            trie.allocate_budget(total_epsilon=FIXED_EPSILON)
+            # 这里调用带剪枝的加噪方法
+            trie.apply_noise_and_prune(k=K_VAL, b=B_VAL)
+            sanitized_results = trie.get_sanitized_data(only_leaves=False)
+
+            f_score = calculate_f_score(raw_results, sanitized_results, k_val)
+            fscore_vs_k[name].append(f_score)
+
+    return err_vs_eps, jsd_vs_eps, fscore_vs_k
+
+
+def run_fig_47():
+    # 假设 trip_counts 和 total_flow 已经清洗完成
+    # 预处理路径（只算一次 Dijkstra，极大提升速度）
+    path_list = get_preprocessed_paths(trip_counts)
+
+    # 运行实验
+    # 这里的函数就是你上一条消息里写的那个，记得 return 结果
+    err_vs_eps, jsd_vs_eps, fscore_vs_k = run_extended_experiments(trip_counts, total_flow)
+
+    # 绘图 (Figure 4: Relative Error vs Epsilon)
+    EPSILONS = [0.1, 0.5, 1.0, 1.5, 2.0]
+    plot_results(err_vs_eps,
+                 x_vals=EPSILONS,
+                 x_label='Privacy Budget (Epsilon)',
+                 y_label='Average Relative Error',
+                 title='Figure 4: Utility vs Epsilon')
+
+    # 绘图 (Figure 6: JSD vs Epsilon)
+    plot_results(jsd_vs_eps,
+                 x_vals=EPSILONS,
+                 x_label='Privacy Budget (Epsilon)',
+                 y_label='Jensen-Shannon Divergence',
+                 title='Figure 6: Distribution Similarity')
+
+    #  绘图 (Figure 5: F-Score vs K)
+    K_VALUES = [10, 20, 30, 40, 50]
+    plot_results(fscore_vs_k,
+                 x_vals=K_VALUES,
+                 x_label='Top-K',
+                 y_label='F-Score',
+                 title='Figure 5: Top-K Frequent Path Identification')
+# 测试的主逻辑，相关的具体测试代码都放在上面了
 if __name__ == "__main__":
     # 确保 trip_counts 和 total_flow 已经生成
+    # 这个标准测试是用在横向比对各种模型效果的时候用的（复现fig3）
     run_benchmark(trip_counts, total_flow)
+
+    run_fig_47()

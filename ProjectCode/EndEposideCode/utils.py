@@ -1,5 +1,6 @@
 import networkx as nx
 import numpy as np
+from scipy.stats import entropy
 
 G = nx.Graph()
 
@@ -280,6 +281,76 @@ def calculate_relative_error(original_trie, sanitized_results, total_flow):
 
 
 
+
+"""
+下面的方法是用来写出fig4-7的
+"""
+def get_top_k_paths(results, k):
+    """提取 Top-K 路径集合"""
+    sorted_res = sorted(results, key=lambda x: x['count'], reverse=True)
+    return set([item['path'] for item in sorted_res[:k]])
+
+
+def calculate_f_score(original_results, sanitized_results, k):
+    """计算 Top-K 的 F-Score"""
+    if k == 0: return 0.0
+    real_top_k = get_top_k_paths(original_results, k)
+    noisy_top_k = get_top_k_paths(sanitized_results, k)
+
+    intersection = len(real_top_k.intersection(noisy_top_k))
+    return intersection / k
+
+
+def calculate_jsd(original_results, sanitized_results):
+    """计算 Jensen-Shannon Divergence (JSD)"""
+    raw_dict = {item['path']: item['count'] for item in original_results if item['count'] > 0}
+    san_dict = {item['path']: item['count'] for item in sanitized_results if item['count'] > 0}
+
+    all_paths = list(set(raw_dict.keys()) | set(san_dict.keys()))
+
+    # 转换为频率分布
+    P = np.array([raw_dict.get(p, 0.0) for p in all_paths])
+    Q = np.array([san_dict.get(p, 0.0) for p in all_paths])
+
+    sum_P = np.sum(P)
+    sum_Q = np.sum(Q)
+
+    if sum_P == 0 or sum_Q == 0:
+        return 1.0  # 极端异常情况
+
+    P = P / sum_P
+    Q = Q / sum_Q
+
+    M = 0.5 * (P + Q)
+
+    # 使用 scipy.stats.entropy 计算 KL 散度
+    jsd = 0.5 * entropy(P, M) + 0.5 * entropy(Q, M)
+    return jsd
+
+
+def get_preprocessed_paths(trip_counts_df):
+    """
+    将 OD 统计数据转换为 (路径, 权重) 的列表
+    """
+    print("正在进行路径推断预处理...")
+    preprocessed = []
+    path_cache = {}  # 缓存，避免重复调用 Dijkstra
+
+    for row in trip_counts_df.itertuples():
+        start, end = row.station_in, row.station_out
+        count = row.passenger_count
+
+        pair = (start, end)
+        if pair not in path_cache:
+            # 调用你原有的 infer_trajectory
+            path_cache[pair] = infer_trajectory(start, end)
+
+        path = path_cache[pair]
+        if path:
+            preprocessed.append((path, count))
+
+    print(f"预处理完成，共计 {len(preprocessed)} 条唯一路径。")
+    return preprocessed
 
 
 
