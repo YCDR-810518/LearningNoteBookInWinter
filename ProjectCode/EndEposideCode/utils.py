@@ -101,7 +101,7 @@ for station, lines in transfers:
                 G.add_edge(u, v, weight=transfer_penalty)
 
 
-# --- 路径推断函数  ---
+# 路径推断函数
 def infer_trajectory(start_station, end_station):
     # 自动移除输入中的“站”字
     start_station, end_station = start_station.replace('站', ''), end_station.replace('站', '')
@@ -282,52 +282,6 @@ def calculate_relative_error(original_trie, sanitized_results, total_flow):
 
 
 
-"""
-下面的方法是用来写出fig4-7的
-"""
-def get_top_k_paths(results, k):
-    """提取 Top-K 路径集合"""
-    sorted_res = sorted(results, key=lambda x: x['count'], reverse=True)
-    return set([item['path'] for item in sorted_res[:k]])
-
-
-def calculate_f_score(original_results, sanitized_results, k):
-    """计算 Top-K 的 F-Score"""
-    if k == 0: return 0.0
-    real_top_k = get_top_k_paths(original_results, k)
-    noisy_top_k = get_top_k_paths(sanitized_results, k)
-
-    intersection = len(real_top_k.intersection(noisy_top_k))
-    return intersection / k
-
-
-def calculate_jsd(original_results, sanitized_results):
-    """计算 Jensen-Shannon Divergence (JSD)"""
-    raw_dict = {item['path']: item['count'] for item in original_results if item['count'] > 0}
-    san_dict = {item['path']: item['count'] for item in sanitized_results if item['count'] > 0}
-
-    all_paths = list(set(raw_dict.keys()) | set(san_dict.keys()))
-
-    # 转换为频率分布
-    P = np.array([raw_dict.get(p, 0.0) for p in all_paths])
-    Q = np.array([san_dict.get(p, 0.0) for p in all_paths])
-
-    sum_P = np.sum(P)
-    sum_Q = np.sum(Q)
-
-    if sum_P == 0 or sum_Q == 0:
-        return 1.0  # 极端异常情况
-
-    P = P / sum_P
-    Q = Q / sum_Q
-
-    M = 0.5 * (P + Q)
-
-    # 使用 scipy.stats.entropy 计算 KL 散度
-    jsd = 0.5 * entropy(P, M) + 0.5 * entropy(Q, M)
-    return jsd
-
-
 def get_preprocessed_paths(trip_counts_df):
     """
     将 OD 统计数据转换为 (路径, 权重) 的列表
@@ -353,6 +307,106 @@ def get_preprocessed_paths(trip_counts_df):
     return preprocessed
 
 
+
+def calculate_jsd(original_results, sanitized_results):
+    """
+    计算 Jensen-Shannon Divergence (JSD) 以评估分布相似性
+    original_results: 原始数据列表 [{"path": "...", "count": ...}]
+    sanitized_results: 加噪后数据列表 [{"path": "...", "count": ...}]
+    """
+    # 转换为字典格式方便对齐，并过滤非正数（熵计算要求分量为正）
+    raw_dict = {item['path']: max(0, item['count']) for item in original_results}
+    san_dict = {item['path']: max(0, item['count']) for item in sanitized_results}
+
+    # 获取并集路径，确保两个分布在相同的维度（Sample Space）上对比
+    all_paths = list(set(raw_dict.keys()) | set(san_dict.keys()))
+
+    # 构建频率向量 P 和 Q
+    P = np.array([raw_dict.get(p, 0.0) for p in all_paths])
+    Q = np.array([san_dict.get(p, 0.0) for p in all_paths])
+
+    # 归一化为概率分布（概率总和为 1）
+    sum_P = np.sum(P)
+    sum_Q = np.sum(Q)
+
+    if sum_P == 0: return 1.0  # 原始数据为空的极端情况
+    P = P / sum_P
+
+    # 如果加噪后所有路径都被剪枝了（sum_Q为0），JSD 趋向于最大值
+    if sum_Q == 0: return 1.0
+    Q = Q / sum_Q
+
+    # 计算 M = 0.5 * (P + Q)
+    M = 0.5 * (P + Q)
+
+    # JSD(P||Q) = 0.5 * KL(P||M) + 0.5 * KL(Q||M)
+    # scipy.stats.entropy(P, M) 默认计算的就是 KL 散度
+    js_divergence = 0.5 * entropy(P, M) + 0.5 * entropy(Q, M)
+
+    return js_divergence
+import matplotlib.pyplot as plt
+
+
+def plot_figure_6_combined(res1, res2, res3, res4):
+    """
+    res1: run_fig6_1 的返回值 (单个点的 Breakdown)
+    res2: run_fig6_1_3 的返回值 (随 K 变化)
+    res3: run_fig6_1_4 的返回值 (随 B 变化)
+    res4: run_fig6_2 的返回值 (随 Epsilon 变化)
+    """
+    # 设置全局参数范围（需与你测试函数中的一致）
+    K_RANGE = [0.5, 0.75, 1.0, 1.25, 1.5]
+    B_RANGE = [0, 1, 2, 3, 4, 5]
+    EPS_RANGE = [0.5, 0.75, 1.0, 1.25, 1.5]
+
+    fig, axes = plt.subplots(2, 2, figsize=(14, 11))
+    plt.subplots_adjust(wspace=0.25, hspace=0.3)
+
+    # 颜色风格定义 (论文常用配色)
+    colors = ['#4A90E2', '#50E3C2', '#F5A623', '#D0021B']
+    stages = ["Reading", "Allocation", "Sanitization", "Writing"]
+    line_style = {"color": "red", "marker": "o", "linewidth": 2, "markersize": 8}
+
+    # --- (a) Subplot 1: Runtime Breakdown ---
+    ax = axes[0, 0]
+    bottom = 0
+    # 取 res1 列表中的第一个值（因为 res1 只有一个点）
+    for i, stage in enumerate(stages):
+        val = res1[stage][0]
+        ax.bar(['Our Algorithm'], [val], bottom=bottom, label=stage, color=colors[i], width=0.4)
+        bottom += val
+    ax.set_ylabel('Runtime (s)', fontsize=12)
+    ax.set_title('(a) k=1.5, b=1, ε=1', fontsize=13)
+    ax.legend(loc='upper right', frameon=True)
+
+    # --- (b) Subplot 2: Runtime vs. K ---
+    ax = axes[0, 1]
+    ax.plot(K_RANGE, res2["Total"], **line_style)
+    ax.set_xlabel('Parameter k', fontsize=12)
+    ax.set_ylabel('Total Runtime (s)', fontsize=12)
+    ax.set_title('(b) b=1, ε=1', fontsize=13)
+
+    # --- (c) Subplot 3: Runtime vs. B ---
+    ax = axes[1, 0]
+    ax.plot(B_RANGE, res3["Total"], **{**line_style, "marker": "s"})  # 使用方块 marker
+    ax.set_xlabel('Parameter b', fontsize=12)
+    ax.set_ylabel('Total Runtime (s)', fontsize=12)
+    ax.set_title('(c) k=1.5, ε=1', fontsize=13)
+
+    # --- (d) Subplot 4: Runtime vs. Epsilon ---
+    ax = axes[1, 1]
+    ax.plot(EPS_RANGE, res4["Total"], **{**line_style, "marker": "^"})  # 使用三角 marker
+    ax.set_xlabel('Privacy Budget (ε)', fontsize=12)
+    ax.set_ylabel('Total Runtime (s)', fontsize=12)
+    ax.set_title('(d) k=1.5, b=1', fontsize=13)
+
+    # 统一优化所有子图的网格线
+    for row in axes:
+        for a in row:
+            a.grid(True, linestyle=':', alpha=0.6)
+
+    plt.suptitle('Figure 6: Computational Efficiency Analysis', fontsize=16, fontweight='bold')
+    plt.show()
 
 
 

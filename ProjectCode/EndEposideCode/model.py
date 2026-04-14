@@ -5,7 +5,7 @@ from utils import TrajectoryTrie
 
 class LagrangianTrie(TrajectoryTrie):
     """
-    完全论文版：基于 Query Probability + Lagrangian 优化
+    基于 Query Probability + Lagrangian 优化
     """
 
     def allocate_budget(self, total_epsilon):
@@ -19,7 +19,7 @@ class LagrangianTrie(TrajectoryTrie):
         self._normalize_budget_per_path(self.root, total_epsilon)
 
     # -----------------------------
-    # Step 1: 计算 p_i
+    # 计算 p_i
     # -----------------------------
     def _compute_query_probability(self, node):
         """
@@ -121,14 +121,14 @@ class SafePathTrie(TrajectoryTrie):
         # 这样第一层会分到近一半的预算，第二层分到剩余的一半，以此类推
         decay_factor = 0.5
 
-        # 1. 计算每一层的权重
+        # 计算每一层的权重
         weights = [np.power(decay_factor, i) for i in range(self.max_height)]
 
-        # 2. 归一化权重，确保所有层级加起来等于 total_epsilon
+        # 归一化权重，确保所有层级加起来等于 total_epsilon
         sum_weights = sum(weights)
         norm_weights = [(w / sum_weights) * total_epsilon for w in weights]
 
-        # 3. 递归为树中节点赋值
+        # 递归为树中节点赋值
         self._assign_recursive(self.root, norm_weights, level=0)
 
     def _assign_recursive(self, node, weights, level):
