@@ -1,6 +1,7 @@
 import networkx as nx
 import numpy as np
 from scipy.stats import entropy
+import math
 
 G = nx.Graph()
 
@@ -214,7 +215,6 @@ class TrajectoryTrie:
             child.noisy_count = max(0, child.count + noise)
 
             # 动态阈值（核心）
-            import math
             threshold = k * math.sqrt(scale)
 
             if child.noisy_count < threshold:
@@ -407,7 +407,3 @@ def plot_figure_6_combined(res1, res2, res3, res4):
 
     plt.suptitle('Figure 6: Computational Efficiency Analysis', fontsize=16, fontweight='bold')
     plt.show()
-
-
-
-

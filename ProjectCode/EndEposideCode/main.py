@@ -17,7 +17,7 @@ data_path = Path(__file__).parent / "data"
 # 使用 rglob 还可以递归搜索子文件夹下的所有 csv
 all_files = list(data_path.glob("*.csv"))
 
-df_list = [pd.read_csv(f) for f in all_files]
+df_list = [pd.read_csv(f, dtype={'card_no': str, 'deal_date': str, 'station': str, 'deal_type': str}) for f in all_files]
 data = pd.concat(df_list, ignore_index=True)
 print(data.info())
 data = data.dropna()

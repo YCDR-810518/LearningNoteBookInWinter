@@ -82,9 +82,10 @@ class LagrangianTrie(TrajectoryTrie):
 class LiIncrementalTrie(TrajectoryTrie):
     def allocate_budget(self, total_epsilon):
         sigma = 1.0
-        weights = [np.log(lv + sigma) for lv in range(1, self.max_height + 1)]
-        total_weight = sum(weights)
-        norm_weights = [w / total_weight * total_epsilon for w in weights]
+        levels = np.arange(1, self.max_height + 1)
+        weights = np.log(levels + sigma)
+        total_weight = np.sum(weights)
+        norm_weights = weights / total_weight * total_epsilon
 
         self._assign_recursive(self.root, norm_weights, level=0)
 
@@ -98,8 +99,9 @@ class SeqPTTrie(TrajectoryTrie):
     def allocate_budget(self, total_epsilon):
         # SeqPT 的经典做法是按照几何级数或者特定的层级权重分配
         # 越往深层，分配的预算可能越少（因为它假设长路径的敏感度更高）
-        weights = [np.power(0.9, i) for i in range(self.max_height)]
-        norm_weights = [w / sum(weights) * total_epsilon for w in weights]
+        indices = np.arange(self.max_height)
+        weights = np.power(0.9, indices)
+        norm_weights = weights / np.sum(weights) * total_epsilon
 
         self._assign_recursive(self.root, norm_weights, level=0)
 
@@ -122,11 +124,12 @@ class SafePathTrie(TrajectoryTrie):
         decay_factor = 0.5
 
         # 计算每一层的权重
-        weights = [np.power(decay_factor, i) for i in range(self.max_height)]
+        indices = np.arange(self.max_height)
+        weights = np.power(decay_factor, indices)
 
         # 归一化权重，确保所有层级加起来等于 total_epsilon
-        sum_weights = sum(weights)
-        norm_weights = [(w / sum_weights) * total_epsilon for w in weights]
+        sum_weights = np.sum(weights)
+        norm_weights = weights / sum_weights * total_epsilon
 
         # 递归为树中节点赋值
         self._assign_recursive(self.root, norm_weights, level=0)
