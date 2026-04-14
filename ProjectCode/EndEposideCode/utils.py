@@ -1,7 +1,6 @@
 import networkx as nx
 import numpy as np
 from scipy.stats import entropy
-import math
 
 G = nx.Graph()
 
@@ -215,6 +214,7 @@ class TrajectoryTrie:
             child.noisy_count = max(0, child.count + noise)
 
             # 动态阈值（核心）
+            import math
             threshold = k * math.sqrt(scale)
 
             if child.noisy_count < threshold:
@@ -407,64 +407,7 @@ def plot_figure_6_combined(res1, res2, res3, res4):
 
     plt.suptitle('Figure 6: Computational Efficiency Analysis', fontsize=16, fontweight='bold')
     plt.show()
-# 运行实验，支持参数化，返回各算法误差、节点数和JSD
-def run_experiment_with_params(trajectory_data, total_flow, params):
-    """
-    使用给定参数运行实验，返回每个算法的误差、节点数和JSD。
-    trajectory_data: 轨迹数据 (path, count) 的列表
-    total_flow: 总流量
-    params: 参数字典，包括 epsilon, height, k, b
-    返回:
-        results: 字典，包含每个算法的误差、节点数和JSD
-    """
-    epsilon = params['epsilon']
-    height = params['height']
-    k = params['k']
-    b = params['b']
 
-    # 初始化模型
-    models = {
-        "Our Algorithm": LagrangianTrie(height, total_flow),
-        "Li's Algorithm": LiIncrementalTrie(height, total_flow),
-        "SeqPT": SeqPTTrie(height, total_flow),
-        "SafePath": SafePathTrie(height, total_flow)
-    }
 
-    # 插入数据
-    for name, trie in models.items():
-        for path, count in trajectory_data:
-            trie.insert(path, count=count)
 
-    # 分配预算并加噪剪枝
-    results = {}
-    for name, trie in models.items():
-        try:
-            trie.allocate_budget(epsilon)
-            trie.apply_noise_and_prune(k=k, b=b)
 
-            # 获取加噪后的数据
-            sanitized_data = trie.get_sanitized_data(only_leaves=False)
-
-            # 计算误差、节点数和JSD
-            raw_trie = TrajectoryTrie(max_height=height, total_trajectories=total_flow)
-            for path, count in trajectory_data:
-                raw_trie.insert(path, count=count)
-            raw_data = raw_trie.get_raw_data(only_leaves=False)
-
-            error = calculate_relative_error(raw_trie, sanitized_data, total_flow)
-            jsd = calculate_jsd(raw_data, sanitized_data)
-            node_count = len(sanitized_data)
-
-            results[name] = {
-                'error': error,
-                'jsd': jsd,
-                'nodes': node_count
-            }
-        except Exception as e:
-            # 如果算法失败，记录为 NaN
-            results[name] = {
-                'error': float('nan'),
-                'jsd': float('nan'),
-                'nodes': 0
-            }
-    return results

@@ -1,9 +1,8 @@
-
 import pandas as pd
 from pathlib import Path
 from utils import G
 import time
-from utils import  get_preprocessed_paths, plot_figure_6_combined, calculate_jsd, infer_trajectory,run_experiment_with_params
+from utils import  get_preprocessed_paths, plot_figure_6_combined, calculate_jsd, infer_trajectory
 
 r_t_start = time.perf_counter()
 
@@ -18,7 +17,7 @@ data_path = Path(__file__).parent / "data"
 # 使用 rglob 还可以递归搜索子文件夹下的所有 csv
 all_files = list(data_path.glob("*.csv"))
 
-df_list = [pd.read_csv(f, dtype={'card_no': str, 'deal_date': str, 'station': str, 'deal_type': str}) for f in all_files]
+df_list = [pd.read_csv(f) for f in all_files]
 data = pd.concat(df_list, ignore_index=True)
 print(data.info())
 data = data.dropna()
@@ -111,7 +110,6 @@ import matplotlib.pyplot as plt
 import copy
 import numpy as np
 from tqdm import tqdm  # 建议安装：pip install tqdm 用于查看进度
-from matplotlib.widgets import Slider
 from model import LagrangianTrie, LiIncrementalTrie, SeqPTTrie, SafePathTrie
 from utils import calculate_relative_error, TrajectoryTrie, infer_trajectory
 
@@ -570,121 +568,6 @@ def plot_results(results, x_vals, x_label='Epsilon', y_label='Average Relative E
     plt.grid(True, linestyle='--', alpha=0.7)
     plt.show()
 
-def collect_epsilon_per_level(trie):
-    """
-    收集树中每层的 epsilon 值
-    返回字典 {level: [epsilon_values]}
-    """
-    epsilon_levels = {}
-
-    def traverse(node, level):
-        if level not in epsilon_levels:
-            epsilon_levels[level] = []
-        epsilon_levels[level].append(node.epsilon)
-
-        for child in node.children.values():
-            traverse(child, level + 1)
-
-    traverse(trie.root, 0)
-    return epsilon_levels
-
-def run_epsilon_distribution_analysis(trip_counts, total_flow):
-    """
-    分析不同算法在每一层的 ε 分布
-    """
-    # 预处理路径
-    print("正在预计算路径轨迹...")
-    trajectory_data = []
-    for row in tqdm(trip_counts.itertuples(index=False), total=len(trip_counts)):
-        path = infer_trajectory(row.station_in, row.station_out)
-        if path:
-            trajectory_data.append((path, row.passenger_count))
-
-    # 固定参数
-    EPSILON = 1.0
-    HEIGHT = 5  # 固定高度
-
-    # 模型
-    models = {
-        "Our Algorithm": LagrangianTrie(HEIGHT, total_flow),
-        "Li's Algorithm": LiIncrementalTrie(HEIGHT, total_flow),
-        "SeqPT": SeqPTTrie(HEIGHT, total_flow),
-        "SafePath": SafePathTrie(HEIGHT, total_flow)
-    }
-
-    # 插入数据
-    for name, trie in models.items():
-        for path, count in trajectory_data:
-            trie.insert(path, count=count)
-
-    # 分配预算
-    for name, trie in models.items():
-        trie.allocate_budget(EPSILON)
-
-    # 收集每层 ε
-    epsilon_data = {}
-    for name, trie in models.items():
-        epsilon_data[name] = collect_epsilon_per_level(trie)
-
-    # 计算每层平均值和标准差
-    levels = sorted(epsilon_data["Our Algorithm"].keys())
-    stats = {}
-    for name in models.keys():
-        stats[name] = {
-            'means': [np.mean(epsilon_data[name].get(lv, [])) for lv in levels],
-            'stds': [np.std(epsilon_data[name].get(lv, [])) for lv in levels]
-        }
-
-    # 绘制 ε 分布对比图
-    plot_epsilon_distribution(epsilon_data, levels)
-
-    # 绘制平均值+标准差曲线
-    plot_epsilon_stats(stats, levels)
-
-def plot_epsilon_distribution(epsilon_data, levels):
-    """
-    绘制每层 ε 分布的箱线图或散点图
-    """
-    fig, axes = plt.subplots(1, len(levels), figsize=(15, 5), sharey=True)
-    if len(levels) == 1:
-        axes = [axes]
-
-    colors = {'Our Algorithm': 'red', "Li's Algorithm": 'purple', 'SeqPT': 'black', 'SafePath': 'blue'}
-
-    for i, lv in enumerate(levels):
-        ax = axes[i]
-        for name, data in epsilon_data.items():
-            if lv in data:
-                ax.scatter([name] * len(data[lv]), data[lv], color=colors[name], alpha=0.6, label=name if i == 0 else "")
-        ax.set_title(f'Level {lv}')
-        ax.set_xlabel('Algorithm')
-        ax.tick_params(axis='x', rotation=45)
-
-    axes[0].set_ylabel('Epsilon')
-    plt.legend()
-    plt.suptitle('Epsilon Distribution per Level')
-    plt.tight_layout()
-    plt.show()
-
-def plot_epsilon_stats(stats, levels):
-    """
-    绘制每层 ε 的平均值+标准差曲线
-    """
-    plt.figure(figsize=(10, 6))
-    colors = {'Our Algorithm': 'red', "Li's Algorithm": 'purple', 'SeqPT': 'black', 'SafePath': 'blue'}
-
-    for name, data in stats.items():
-        means = data['means']
-        stds = data['stds']
-        plt.errorbar(levels, means, yerr=stds, label=name, color=colors[name], marker='o', capsize=5)
-
-    plt.xlabel('Level')
-    plt.ylabel('Epsilon (Mean ± Std)')
-    plt.title('Epsilon Mean and Std per Level')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
-
 
 
 
@@ -717,131 +600,3 @@ if __name__ == "__main__":
     jsd_res, err_res, eps_vals = run_fig7(total_flow, path_list)
     plot_results(jsd_res, x_vals=eps_vals, x_label='Epsilon', y_label='JSD', title='(a) JSD vs Epsilon')
     plot_results(err_res, x_vals=eps_vals, x_label='Epsilon', y_label='Relative Error', title='(b) Relative Error vs Epsilon')
-
-    # ε 分布分析
-    run_epsilon_distribution_analysis(trip_counts, total_flow)
-
-    # 交互式探索器
-    interactive_explorer(trip_counts, total_flow)
-
-def interactive_explorer(trip_counts, total_flow):
-    """
-    交互式隐私预算—效用—结构探索器，使用 matplotlib 滑块
-    """
-    # 使用部分数据以提高效率
-    sample_trip_counts = trip_counts.head(100)
-    print("正在预处理路径轨迹（使用部分数据）...")
-    trajectory_data = []
-    for row in tqdm(sample_trip_counts.itertuples(index=False), total=len(sample_trip_counts)):
-        path = infer_trajectory(row.station_in, row.station_out)
-        if path:
-            trajectory_data.append((path, row.passenger_count))
-
-    # 初始参数
-    init_epsilon = 1.0
-    init_height = 5
-    init_k = 1.5
-    init_b = 1.0
-
-    # 创建图表
-    fig, ((ax1, ax2), (ax3, ax_slider)) = plt.subplots(2, 2, figsize=(14, 10))
-    plt.subplots_adjust(left=0.1, bottom=0.35)
-
-    # 三个子图
-    bars1 = ax1.bar(['Our', 'Li', 'SeqPT', 'Safe'], [0]*4, color=['red', 'purple', 'black', 'blue'])
-    ax1.set_title('Utility: Relative Error')
-    ax1.set_ylabel('Relative Error')
-
-    bars2 = ax2.bar(['Our', 'Li', 'SeqPT', 'Safe'], [0]*4, color=['red', 'purple', 'black', 'blue'])
-    ax2.set_title('Structure: Node Count')
-    ax2.set_ylabel('Node Count')
-
-    bars3 = ax3.bar(['Our', 'Li', 'SeqPT', 'Safe'], [0]*4, color=['red', 'purple', 'black', 'blue'])
-    ax3.set_title('Distribution Similarity: JSD')
-    ax3.set_ylabel('JSD')
-
-    # 解释文本
-    explanation_text = ax_slider.text(0.1, 0.8, 'Explanation will appear here.', transform=ax_slider.transAxes, fontsize=10, verticalalignment='top')
-    ax_slider.axis('off')
-
-    # 滑块
-    ax_epsilon = plt.axes([0.1, 0.25, 0.65, 0.03])
-    slider_epsilon = Slider(ax_epsilon, 'Epsilon', 0.1, 5.0, valinit=init_epsilon)
-
-    ax_height = plt.axes([0.1, 0.2, 0.65, 0.03])
-    slider_height = Slider(ax_height, 'Height', 2, 10, valinit=init_height, valstep=1)
-
-    ax_k = plt.axes([0.1, 0.15, 0.65, 0.03])
-    slider_k = Slider(ax_k, 'k', 0.5, 3.0, valinit=init_k)
-
-    ax_b = plt.axes([0.1, 0.1, 0.65, 0.03])
-    slider_b = Slider(ax_b, 'b', 0.0, 5.0, valinit=init_b)
-
-    def update(val):
-        epsilon = slider_epsilon.val
-        height = int(slider_height.val)
-        k = slider_k.val
-        b = slider_b.val
-
-        params = {'epsilon': epsilon, 'height': height, 'k': k, 'b': b, 'query_samples': 10}
-
-        results = run_experiment_with_params(trajectory_data, total_flow, params)
-
-        # 更新图表
-        errors = [results[name]['error'] for name in ['Our Algorithm', "Li's Algorithm", 'SeqPT', 'SafePath']]
-        nodes = [results[name]['nodes'] for name in ['Our Algorithm', "Li's Algorithm", 'SeqPT', 'SafePath']]
-        jsds = [results[name]['jsd'] for name in ['Our Algorithm', "Li's Algorithm", 'SeqPT', 'SafePath']]
-
-        for bar, val in zip(bars1, errors):
-            bar.set_height(val)
-        ax1.relim()
-        ax1.autoscale_view()
-
-        for bar, val in zip(bars2, nodes):
-            bar.set_height(val)
-        ax2.relim()
-        ax2.autoscale_view()
-
-        for bar, val in zip(bars3, jsds):
-            bar.set_height(val)
-        ax3.relim()
-        ax3.autoscale_view()
-
-        # 更新解释
-        explanation = explain_changes(results, params)
-        explanation_text.set_text(explanation)
-
-        fig.canvas.draw_idle()
-
-    # 连接滑块事件
-    slider_epsilon.on_changed(update)
-    slider_height.on_changed(update)
-    slider_k.on_changed(update)
-    slider_b.on_changed(update)
-
-    # 初始更新
-    update(None)
-
-    plt.show()
-
-def explain_changes(results, params):
-    """
-    自动解释曲线变化的原因，返回字符串
-    """
-    epsilon = params['epsilon']
-    height = params['height']
-    k = params['k']
-    b = params['b']
-    
-    explanation = f"- ε={epsilon}: 隐私预算越高，噪声越小，误差和JSD越低，但节点数可能更多。\n"
-    explanation += f"- 高度={height}: 树越高，路径更详细，但计算复杂度增加，误差可能变化。\n"
-    explanation += f"- k={k}: 剪枝阈值k越大，保留更多节点，误差降低但隐私性减弱。\n"
-    explanation += f"- b={b}: 另一个剪枝参数，影响节点保留。\n"
-    
-    best_error = min(results, key=lambda x: results[x]['error'])
-    explanation += f"- 最佳效用算法: {best_error} (最低误差)\n"
-    
-    best_nodes = max(results, key=lambda x: results[x]['nodes'])
-    explanation += f"- 最多节点算法: {best_nodes} (最详细结构)"
-    
-    return explanation
