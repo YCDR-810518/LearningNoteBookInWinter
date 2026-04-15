@@ -3,7 +3,7 @@ from pathlib import Path
 from utils import G
 import time
 from utils import  get_preprocessed_paths, plot_figure_6_combined, calculate_jsd, infer_trajectory
-
+from try_search_tool import PrivacyExplorer
 r_t_start = time.perf_counter()
 
 # 清洗逻辑
@@ -532,6 +532,65 @@ def run_fig7(total_flow, path_list):
 
     return jsd_results, err_results, EPSILONS
 
+
+def plot_extra_job(trip_counts, total_flow):
+    """
+    对比三种算法的 Epsilon 层级分布
+    """
+    EPS_TOTAL = 1.0
+    models = {
+        "Our Algorithm": LagrangianTrie,
+        "SeqPT": SeqPTTrie,
+        "Li's Algorithm": LiIncrementalTrie  # 确保你已定义 Li 的类
+    }
+
+    path_list = get_preprocessed_paths(trip_counts)
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6), sharey=True)
+    colors = {"Our Algorithm": "r", "SeqPT": "b", "Li's Algorithm": "g"}
+
+    for i, (name, ModelClass) in enumerate(models.items()):
+        # 初始化并分配预算
+        trie = ModelClass(max_height=30, total_trajectories=total_flow)
+        for path, count in path_list:
+            trie.insert(path, count=count)
+        trie.allocate_budget(total_epsilon=EPS_TOTAL)
+
+        # 获取分布数据
+        dist = trie.get_epsilon_distribution()
+
+        levels = []
+        means = []
+        stds = []
+
+        for lv in range(30):
+            data = dist[lv]
+            if data:
+                levels.append(lv)
+                means.append(np.mean(data))
+                stds.append(np.std(data))
+
+        # 绘图
+        ax = axes[i]
+        means = np.array(means)
+        stds = np.array(stds)
+
+        # 绘制平均值曲线
+        ax.plot(levels, means, label=f'{name} Mean', color=colors[name], linewidth=2)
+
+        # 绘制标准差阴影区域 (展示分布差异)
+        ax.fill_between(levels, means - stds, means + stds,
+                        color=colors[name], alpha=0.3, label='Std Dev')
+
+        ax.set_title(f"ε Distribution: {name}")
+        ax.set_xlabel("Tree Level")
+        if i == 0: ax.set_ylabel("Epsilon Value")
+        ax.grid(True, linestyle=':', alpha=0.6)
+        ax.legend()
+
+    plt.suptitle(f"Layer-wise Epsilon Allocation Comparison (Total ε={EPS_TOTAL})", fontsize=16)
+    plt.tight_layout(rect=(0.0, 0.03, 1, 0.95))
+    plt.show()
+
 def plot_results(results, x_vals, x_label='Epsilon', y_label='Average Relative Error', title='Experiment Result'):
     """
     通用绘图函数
@@ -600,3 +659,10 @@ if __name__ == "__main__":
     jsd_res, err_res, eps_vals = run_fig7(total_flow, path_list)
     plot_results(jsd_res, x_vals=eps_vals, x_label='Epsilon', y_label='JSD', title='(a) JSD vs Epsilon')
     plot_results(err_res, x_vals=eps_vals, x_label='Epsilon', y_label='Relative Error', title='(b) Relative Error vs Epsilon')
+
+    # 这个是进阶任务的图
+    plot_extra_job(trip_counts, total_flow)
+
+    # 这个是交互式的探索器
+    explorer = PrivacyExplorer()
+    plt.show()

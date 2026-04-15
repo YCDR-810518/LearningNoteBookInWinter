@@ -221,6 +221,7 @@ class TrajectoryTrie:
                 del current_node.children[cid]
             elif level < self.max_height:
                 self._process_node_noise(child, level + 1, k, b)
+
     def get_raw_data(self, node=None, path=None, only_leaves=True):
         if node is None: node, path = self.root, []
         results = []
@@ -248,6 +249,25 @@ class TrajectoryTrie:
             if not is_leaf:
                 results.extend(self.get_sanitized_data(child, current_path, only_leaves))
         return results
+
+    def get_epsilon_distribution(self):
+        """
+        统计树中每一层所有节点的 epsilon 分布情况
+        返回: dict {level: [eps1, eps2, ...]}
+        """
+        distribution = {i: [] for i in range(self.max_height)}
+
+        def _collect(node, level):
+            if level >= self.max_height: return
+            # 记录当前节点的 epsilon
+            if hasattr(node, 'epsilon'):
+                distribution[level].append(node.epsilon)
+
+            for child in node.children.values():
+                _collect(child, level + 1)
+
+        _collect(self.root, 0)
+        return distribution
 
 
 
@@ -344,6 +364,39 @@ def calculate_jsd(original_results, sanitized_results):
     js_divergence = 0.5 * entropy(P, M) + 0.5 * entropy(Q, M)
 
     return js_divergence
+
+
+def calculate_f_score(original_results, sanitized_results, k=10):
+    """
+    计算 Top-K 路径识别的 F-Score
+    original_results: 原始数据列表 [{"path": "...", "count": ...}]
+    sanitized_results: 加噪后数据列表 [{"path": "...", "count": ...}]
+    k: 取前 K 条最热门的路径进行对比
+    """
+    # 1. 提取原始数据的前 K 条热门路径（按 count 降序）
+    raw_sorted = sorted(original_results, key=lambda x: x['count'], reverse=True)
+    raw_top_k = set([item['path'] for item in raw_sorted[:k]])
+
+    # 2. 提取加噪数据的前 K 条热门路径
+    san_sorted = sorted(sanitized_results, key=lambda x: x['count'], reverse=True)
+    san_top_k = set([item['path'] for item in san_sorted[:k]])
+
+    # 3. 计算交集（正确识别的热门路径数量）
+    intersection = len(raw_top_k.intersection(san_top_k))
+
+    # 4. 计算 Precision 和 Recall
+    # 在 Top-K 场景下，分母通常都是 k
+    precision = intersection / k if k > 0 else 0
+    recall = intersection / k if k > 0 else 0
+
+    # 5. 计算 F-Score
+    if (precision + recall) == 0:
+        return 0.0
+
+    f_score = 2 * (precision * recall) / (precision + recall)
+    return f_score
+
+
 import matplotlib.pyplot as plt
 
 

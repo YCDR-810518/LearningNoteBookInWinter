@@ -47,6 +47,8 @@ class LagrangianTrie(TrajectoryTrie):
         for child in node.children.values():
             self._compute_weights(child)
 
+
+
     # -----------------------------
     #  路径归一化（关键！！）
     # -----------------------------
