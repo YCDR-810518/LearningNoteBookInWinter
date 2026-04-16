@@ -3,7 +3,7 @@ from pathlib import Path
 from utils import G
 import time
 from utils import  get_preprocessed_paths, plot_figure_6_combined, calculate_jsd, infer_trajectory
-from try_search_tool import PrivacyExplorer
+from try_search_tool import RealDataExplorer
 r_t_start = time.perf_counter()
 
 # 清洗逻辑
@@ -663,6 +663,6 @@ if __name__ == "__main__":
     # 这个是进阶任务的图
     plot_extra_job(trip_counts, total_flow)
 
-    # 这个是交互式的探索器
-    explorer = PrivacyExplorer()
+    # 这个是交互式的数据探索器
+    explorer = RealDataExplorer(path_list, total_flow)
     plt.show()
