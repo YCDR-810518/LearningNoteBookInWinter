@@ -26,3 +26,5 @@ __pycache__/
 *.pyd
 .idea/
 
+ProjectCode/EndEposideCode/__pycache__/utils.cpython-312.pyc
+ProjectCode/EndEposideCode/__pycache__/try_search_tool.cpython-312.pyc
