@@ -1,0 +1,12 @@
+name: EndEposideCode
+dependencies:
+  - python=3.12
+  - pathlib
+  - matplotlib
+  - numpy>=1.26
+  - pandas>=2.0
+  - networkx
+  - pip
+  - pip:
+    - tqdm
+    - scipy
