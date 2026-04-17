@@ -1,11 +1,12 @@
 name: EndEposideCode
-channels:
-  - defaults
 dependencies:
   - python=3.12
   - pathlib
   - matplotlib
-  - numpy
-  - pandas
+  - numpy>=1.26
+  - pandas>=2.0
   - networkx
-prefix: /opt/miniconda3/envs/EndEposideCode
+  - pip
+  - pip:
+    - tqdm
+    - scipy
