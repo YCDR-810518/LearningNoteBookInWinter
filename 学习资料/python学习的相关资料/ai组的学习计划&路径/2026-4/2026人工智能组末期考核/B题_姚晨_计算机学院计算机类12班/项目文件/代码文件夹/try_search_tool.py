@@ -3,10 +3,25 @@ import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
 # 确保从你的 model.py 中导入所有四个模型类
 from model import LagrangianTrie, SafePathTrie, SeqPTTrie, LiIncrementalTrie
+from matplotlib import font_manager
+import os
+# 解决弹出窗口中文显示问题
+def load_local_font():
+    # 获取项目目录下 fonts 文件夹的绝对路径
+    font_path = os.path.join(os.getcwd(), 'fonts', 'NotoSansSC-Regular.ttf')
 
-# 解决中文显示与弹出窗口
-plt.rcParams['font.sans-serif'] = ['SimHei']
-plt.rcParams['axes.unicode_minus'] = False
+    # 检查文件是否存在，防止路径错误
+    if os.path.exists(font_path):
+        # 注册字体
+        font_manager.fontManager.addfont(font_path)
+        # 设置字体属性
+        prop = font_manager.FontProperties(fname=font_path)
+        plt.rcParams['font.sans-serif'] = [prop.get_name()]
+        plt.rcParams['axes.unicode_minus'] = False
+        print(f"成功加载本地字体: {prop.get_name()}")
+    else:
+        print(f"错误：未在 {font_path} 找到字体文件，请检查目录")
+
 
 
 class RealDataExplorer:
