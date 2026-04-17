@@ -23,4 +23,6 @@ ProjectCode/EndEposideCode/6d86271d22551b128fd4e13222028a9a.jpg
 __pycache__/
 *.pyc
 *.pyo
-*.pyd.idea/
+*.pyd
+.idea/
+
