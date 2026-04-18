@@ -213,9 +213,8 @@ class TrajectoryTrie:
             noise = np.random.laplace(0, scale)
             child.noisy_count = max(0, child.count + noise)
 
-            # 动态阈值（核心）
-            import math
-            threshold = k * math.sqrt(scale)
+
+            threshold = k * (1.0 / level) + b
 
             if child.noisy_count < threshold:
                 del current_node.children[cid]
@@ -461,6 +460,7 @@ def plot_figure_6_combined(res1, res2, res3, res4):
             a.grid(True, linestyle=':', alpha=0.6)
 
     plt.suptitle('Figure 6: Computational Efficiency Analysis', fontsize=16, fontweight='bold')
+    plt.savefig("fig_6.svg")
     plt.show()
 
 

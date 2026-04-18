@@ -1,5 +1,7 @@
 import pandas as pd
 from pathlib import Path
+
+from draw import plot_trie_top_n, plot_subway_network
 from utils import G
 import time
 from utils import  get_preprocessed_paths, plot_figure_6_combined, calculate_jsd, infer_trajectory
@@ -304,6 +306,7 @@ def run_fig5():
     plt.title('Figure 5: Error vs Height under Different Epsilon')
     plt.grid(True, linestyle='--', alpha=0.7)
     plt.legend()
+    plt.savefig("fig_5.svg")
     plt.show()
 
 def run_fig6_1(_trip_counts, _total_flow,reading_time):
@@ -593,6 +596,7 @@ def plot_extra_job(trip_counts, total_flow):
 
     plt.suptitle(f"Layer-wise Epsilon Allocation Comparison (Total ε={EPS_TOTAL})", fontsize=16)
     plt.tight_layout(rect=(0.0, 0.03, 1, 0.95))
+    plt.savefig("fig_8.svg")
     plt.show()
 
 def plot_results(results, x_vals, x_label='Epsilon', y_label='Average Relative Error', title='Experiment Result'):
@@ -629,6 +633,7 @@ def plot_results(results, x_vals, x_label='Epsilon', y_label='Average Relative E
     plt.title(title)
     plt.legend()
     plt.grid(True, linestyle='--', alpha=0.7)
+    plt.savefig("figures/" + title + ".svg")
     plt.show()
 
 
@@ -636,10 +641,21 @@ def plot_results(results, x_vals, x_label='Epsilon', y_label='Average Relative E
 
 # 测试的主逻辑，相关的具体测试代码都放在上面了
 if __name__ == "__main__":
+    """
+    # 注意，这里被注释掉的几个是用来绘制路线图和树状图的
+    path_list = get_preprocessed_paths(trip_counts)
+    raw_trie = TrajectoryTrie(max_height=10, total_trajectories=total_flow)
+    for path, count in path_list:
+        raw_trie.insert(path, count=count)
+
+    plot_trie_top_n(raw_trie, max_level=5)
+    plot_subway_network(G)
+    """
     # 确保 trip_counts 和 total_flow 已经生成
     # 这个标准测试是用在横向比对各种模型效果的时候用的（复现fig3）
     run_benchmark(trip_counts, total_flow)
 
+    
     # 这个测试是用在评估树高度对运行时间影响的时候用的（复现fig4）
     # 需要先预处理出 path_list（(path, count) 元组列表
     # total_flow是总流量，用来处理root节点的
