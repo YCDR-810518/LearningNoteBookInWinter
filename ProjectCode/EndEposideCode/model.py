@@ -18,9 +18,8 @@ class LagrangianTrie(TrajectoryTrie):
         # 按“每条路径归一化”分配 ε（满足约束）
         self._normalize_budget_per_path(self.root, total_epsilon)
 
-    # -----------------------------
+
     # 计算 p_i
-    # -----------------------------
     def _compute_query_probability(self, node):
         """
         自底向上计算：
@@ -38,9 +37,8 @@ class LagrangianTrie(TrajectoryTrie):
         )
         return node.p
 
-    # -----------------------------
+
     #  ε_i ∝ p_i^(1/3)
-    # -----------------------------
     def _compute_weights(self, node):
         node.weight = np.power(node.p, 1.0 / 3.0)
 
@@ -49,9 +47,8 @@ class LagrangianTrie(TrajectoryTrie):
 
 
 
-    # -----------------------------
+
     #  路径归一化（关键！！）
-    # -----------------------------
     def _normalize_budget_per_path(self, root, total_epsilon):
         """
         对每条 root->leaf 路径：

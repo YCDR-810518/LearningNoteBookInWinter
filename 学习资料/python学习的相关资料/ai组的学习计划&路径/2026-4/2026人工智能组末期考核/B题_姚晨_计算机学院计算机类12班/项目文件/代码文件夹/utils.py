@@ -460,7 +460,6 @@ def plot_figure_6_combined(res1, res2, res3, res4):
             a.grid(True, linestyle=':', alpha=0.6)
 
     plt.suptitle('Figure 6: Computational Efficiency Analysis', fontsize=16, fontweight='bold')
-    plt.savefig("fig_6.svg")
     plt.show()
 
 

@@ -306,7 +306,6 @@ def run_fig5():
     plt.title('Figure 5: Error vs Height under Different Epsilon')
     plt.grid(True, linestyle='--', alpha=0.7)
     plt.legend()
-    plt.savefig("fig_5.svg")
     plt.show()
 
 def run_fig6_1(_trip_counts, _total_flow,reading_time):
@@ -596,7 +595,6 @@ def plot_extra_job(trip_counts, total_flow):
 
     plt.suptitle(f"Layer-wise Epsilon Allocation Comparison (Total ε={EPS_TOTAL})", fontsize=16)
     plt.tight_layout(rect=(0.0, 0.03, 1, 0.95))
-    plt.savefig("fig_8.svg")
     plt.show()
 
 def plot_results(results, x_vals, x_label='Epsilon', y_label='Average Relative Error', title='Experiment Result'):
@@ -633,7 +631,6 @@ def plot_results(results, x_vals, x_label='Epsilon', y_label='Average Relative E
     plt.title(title)
     plt.legend()
     plt.grid(True, linestyle='--', alpha=0.7)
-    plt.savefig("figures/" + title + ".svg")
     plt.show()
 
 
